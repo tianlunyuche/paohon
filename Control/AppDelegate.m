@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "ViewController.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+//    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+////用数据视图 加载网络 图片和json
+//    self.window =[[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    
+//    ViewController* rootVC =[[ViewController alloc] init];
+//    UINavigationController* navVC =[[UINavigationController alloc] initWithRootViewController:rootVC];
+//    self.window.rootViewController =navVC;
+//    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
