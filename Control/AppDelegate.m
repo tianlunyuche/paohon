@@ -23,10 +23,10 @@
 ////用数据视图 加载网络 图片和json
 //    self.window =[[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
-//    ViewController* rootVC =[[ViewController alloc] init];
-//    UINavigationController* navVC =[[UINavigationController alloc] initWithRootViewController:rootVC];
-//    self.window.rootViewController =navVC;
-//    [self.window makeKeyAndVisible];
+    ViewController* rootVC =[[ViewController alloc] init];
+    UINavigationController* navVC =[[UINavigationController alloc] initWithRootViewController:rootVC];
+    self.window.rootViewController =navVC;
+    [self.window makeKeyAndVisible];
     
     return YES;
 }

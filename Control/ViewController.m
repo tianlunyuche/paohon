@@ -12,15 +12,45 @@
 #import "ThirdVC.h"
 #import "TableViewController.h"
 #import <CoreMotion/CoreMotion.h>
+#import "UIImage+ZXQRcode.h"
+#import <ReactiveObjC/ReactiveObjC.h>
 
+#import "LoopQueue.h"
+//定位服务 ,地图
+#import <CoreLocation/CoreLocation.h>
+#import <MapKit/MapKit.h>
+//大头针
+#import "ZXAnnotation.h"
+#import "ZXCalloutAnnotatonView.h"
+
+//#import <ReactiveCocoa/ReactiveCocoa.h>
+
+typedef void(^RunloopBlock) (void);
 //#import "MBProgressHUD.h"
 
 #define kscreen [UIScreen mainScreen].bounds.size
 
 @interface ViewController ()
-<AVAudioPlayerDelegate,UITableViewDelegate,UITableViewDataSource,AVAudioRecorderDelegate,UISearchBarDelegate,UISearchDisplayDelegate>
+<AVAudioPlayerDelegate,UITableViewDelegate,UITableViewDataSource,AVAudioRecorderDelegate,UISearchBarDelegate,UISearchDisplayDelegate,MPMediaPickerControllerDelegate,MKMapViewDelegate>
 //<UITextFieldDelegate ,UIAlertViewDelegate,UITabBarControllerDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 
+@property(strong,nonatomic)CMMotionManager *motionManager;
+
+@property(assign,nonatomic,getter=isFinish)BOOL finish;
+
+@property(nonatomic,strong)dispatch_source_t runloopTime;
+
+@property(nonatomic,strong)NSMutableArray *tasks;
+//最大任务数
+@property(nonatomic,assign)NSUInteger maxQueueLength;
+//通知 观察者
+@property (nonatomic, weak) id observe;
+
+@property (nonatomic, strong) MPMusicPlayerController *musicPlayer;
+
+@property (strong, nonatomic)CLGeocoder *geocoder;
+
+@property(strong,nonatomic) MKMapView *mapView;
 
 @end
 
@@ -67,8 +97,11 @@
 //    [self setAnimation];
     
 //    [self NSOperationQueueCreat];
+    
+//     声音和视频
 //    [self creatAVPlayer];
 //    [self playAV];
+//      [self playNotifySound];
     
 //    [self creatVieo];
 //    [self tablebarCreat];
@@ -81,11 +114,348 @@
 //    [self strReplace];
 //    [self WebImageCreat];
     
-    [self UISwitchCreat];
+//    [self UISwitchCreat];
 //    [self controlHardware];
+//    [self QRcodeCreat];
+//    [self runloopCreat];
+//    [self NSNotificationCenterCreat];
+//    [self creatMusic];
+//    [self creatVieo];
+//    [self Creatgeocoder];
+      [self CreatMap];
+}
+
+#pragma mark - 地图 和大头针
+- (void)CreatMap{
+    
+    _mapView =[[MKMapView alloc] initWithFrame:kScreenBounds];
+    [self.view addSubview:_mapView];
+    //设置代理
+    _mapView.delegate =self;
+    //请求定位服务
+    CLLocationManager *locationMgr=[[CLLocationManager alloc] init];
+    if(![CLLocationManager locationServicesEnabled]||[CLLocationManager authorizationStatus]!=kCLAuthorizationStatusAuthorizedWhenInUse){
+        [locationMgr requestWhenInUseAuthorization];
+    }
+    
+    //用户位置追踪
+    _mapView.userTrackingMode =MKUserTrackingModeFollow;
+    
+    _mapView.mapType =MKMapTypeStandard;
+    //添加 大头针
+//    [_mapView addAnnotation:self.annotation];
+    //添加 自定义大头针
+    [_mapView addAnnotation:self.myannotation];
+       [_mapView addAnnotation:self.myannotation2];
+}
+
+- (ZXAnnotation *)myannotation{
+    
+    ZXAnnotation *annotation =[[ZXAnnotation alloc] init];
+    annotation.title =@"xin";
+    annotation.subtitle =@"The more effort ,the more lucky";
+    annotation.coordinate =CLLocationCoordinate2DMake(23.11, 113.27);
+    annotation.image =[UIImage imageNamed:@"tag_selected"];
+    annotation.icon=[UIImage imageNamed:@"alert_big_icon"];
+    annotation.detail=@"lucky...";
+    annotation.rate=[UIImage imageNamed:@"ssdk_oks_classic_qq"];
+    
+    return annotation;
+}
+- (ZXAnnotation *)myannotation2{
+    
+    ZXAnnotation *annotation =[[ZXAnnotation alloc] init];
+    annotation.title =@"handsome";
+    annotation.subtitle =@" more lucky";
+    annotation.coordinate =CLLocationCoordinate2DMake(25.11, 115.27);
+    annotation.image =[UIImage imageNamed:@"date_select_p"];
+    annotation.icon=[UIImage imageNamed:@"rll_progress"];
+    annotation.detail=@"666...";
+    annotation.rate=[UIImage imageNamed:@"ssdk_oks_classic_qzone"];
+    
+    return annotation;
+}
+
+- (ZXAnnotation *)annotation{
+    
+    ZXAnnotation *annotation =[[ZXAnnotation alloc] init];
+    annotation.title =@"xin";
+    annotation.subtitle =@"The more effort ,the more lucky";
+    annotation.coordinate =CLLocationCoordinate2DMake(23.11, 113.27);
+    annotation.image =[UIImage imageNamed:@"tag_selected"];
+    return annotation;
+}
+
+//地图代理方法
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
+    
+     //由于当前位置的标注也是一个大头针，所以此时需要判断，此代理方法返回nil使用默认大头针视图
+    if ([annotation isKindOfClass:[ZXAnnotation class]]) {
+//        static NSString *key =@"annotationkey";
+//        MKAnnotationView *annotationView =[mapView dequeueReusableAnnotationViewWithIdentifier:key];
+//        
+//        //如果缓存池不存在则 新建
+//        if (!annotationView) {
+//            annotationView =[[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:key];
+//            annotationView.canShowCallout =true;  //允许交互点击
+//            annotationView.calloutOffset =CGPointMake(0, 1);    //定义详情视图偏移量
+//            annotationView.leftCalloutAccessoryView=kImgV(@"alert");//定义详情左侧视图
+//        }
+//        
+//        //修改大头针视图
+//        //重新设置此类大头针视图的大头针模型(因为有可能是从缓存池中取出来的，位置是放到缓存池时的位置)
+//        annotationView.annotation=annotation;
+//        annotationView.image=((ZXAnnotation *)annotation).image;//设置大头针视图的图片
+//
+    //--------------------------自定义后添加的
+    ZXCalloutAnnotatonView *calloutView=[ZXCalloutAnnotatonView calloutViewWithMapView:mapView];
+        calloutView.annotation=annotation;
+        return calloutView;
+    }
+    else{
+        return nil;
+    }
+}
+
+
+#pragma mark 选中大头针时触发
+//点击一般的大头针KCAnnotation时添加一个大头针作为所点大头针的弹出详情视图
+-(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
+    ZXAnnotation *annotation=view.annotation;
+    if ([view.annotation isKindOfClass:[ZXAnnotation class]]) {
+        //点击一个大头针时移除其他弹出详情视图
+        //        [self removeCustomAnnotation];
+        //添加详情大头针，渲染此大头针视图时将此模型对象赋值给自定义大头针视图完成自动布局
+        ZXAnnotation *annotation1=[[ZXAnnotation alloc]init];
+        annotation1.icon=annotation.icon;
+        annotation1.detail=annotation.detail;
+        annotation1.rate=annotation.rate;
+        annotation1.coordinate=view.annotation.coordinate;
+        [mapView addAnnotation:annotation1];
+    }
+}
+
+#pragma mark 取消选中时触发
+//-(void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view{
+//    [self removeCustomAnnotation];
+//}
+
+#pragma mark 移除所用自定义大头针
+-(void)removeCustomAnnotation{
+    [_mapView.annotations enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        if ([obj isKindOfClass:[ZXAnnotation class]]) {
+            [_mapView removeAnnotation:obj];
+        }
+    }];
+}
+
+#pragma mark - 定位服务 ,获取地名
+- (void)Creatgeocoder{
+    
+    _geocoder =[[CLGeocoder alloc] init];
+    [self getCoordinateByAddress:@"广州"];
+    [self getAddressByLatitude:11.3 longitude:12];
+}
+
+//根据地名 获取地址
+- (void)getCoordinateByAddress:(NSString *)address{
+    
+    //地理编码
+    [_geocoder geocodeAddressString:address completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        //取得第一个地标，
+        CLPlacemark *placemark =[placemarks firstObject];
+        CLLocation *location =placemark.location;           //位置
+        CLRegion *region =placemark.region;                 //区域
+        NSDictionary *addressDic =placemark.addressDictionary;  //详细地址信息字典
+        NSLog(@"位置:%@,区域:%@,详细信息:%@",location,region,addressDic);
+    }];
+}
+
+//根据地标 取得 地名
+-(void)getAddressByLatitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude{
+    
+    //反地理编码
+    CLLocation *location=[[CLLocation alloc]initWithLatitude:latitude longitude:longitude];
+    [_geocoder reverseGeocodeLocation:location completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        CLPlacemark *placemark=[placemarks firstObject];
+        NSLog(@"详细信息:%@",placemark.addressDictionary);
+    }];
+}
+
+
+#pragma mark - 通知中心
+- (void)NSNotificationCenterCreat{
+    
+    UIButton *send =[UIButton buttonWithType:UIButtonTypeRoundedRect];
+    send.backgroundColor=[UIColor redColor];
+    send.frame=CGRectMake(50, 50, 60, 40);
+    [send addTarget:self action:@selector(sendNotificate) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:send];
+    
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addNotification) name:@"tongzhi" object:nil];
+    //第二种方法
+    //Name: 通知的名称
+    //object:谁发出的通知
+    //queue: 队列,决定 block 在哪个线程中执行, nil  在发布通知的线程中执行
+    //usingBlock: 只要监听到通知,就会执行这个 block
+    //这个通知返回一个 id 这个通知同样需要移除
+    _observe = [[NSNotificationCenter defaultCenter] addObserverForName:@"tongzhi" object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+        
+        NSLog(@"收到了通知%@",[NSThread currentThread]);
+    }];
+}
+
+- (void)sendNotificate{
+
+    //发送一个通知
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"tongzhi" object:nil];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"tongzhi" object:nil userInfo:nil];
+    //发送通知 ,异步发送通知, 主线程监听通知
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        NSLog(@"sendNotificate =%@",[NSThread currentThread]);
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"tongzhi" object:nil];
+    });
+}
+
+- (void)addNotification{
+    NSLog(@"addNotification =%@",[NSThread currentThread]);
+    NSLog(@"当调用了发送通知方法后，会执行当前方法");
+}
+
+- (void)dealloc{
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - RunLoop 运行循环 ,2个模式 各包含了 Observer观察者，源source和 时钟timer
+/**
+ 作用：1. 保证程序不退出！ 它是一个死循环！
+    2. 负责监事件， 触摸 ，时钟，网络事件，（系统事件，内核事件）
+    3. 如果没有事件，就进入睡眠
+    4. 在一次循环中，需要绘制 所有屏幕上的点！
+ 
+    Runloop 模式：
+    1， NSDefaultRunLoopMode默认模式
+    2， UITrackingRunLoopMode用户交互模式（只要有用户交互事件 ！！Runloop就会切换到这个模式）
+    3， NSRunLoopCommonModes占位模式（占有了上面 两种模式）
+ 
+ 
+    线程：
+        1，每一条线程 上面都有一个 runloop 
+        2，主线程 不会挂掉的原因 是。主线程的 Runloop 正在跑 run
+        3，子线程 ，上面的 Runloop默认不启动 ！所以子线程 执行完后 就会挂掉
+ 
+    性能优化： 耗时操作放 子线程 ， 更新UI 放主线程 ， UI数据分布加载
+    
+    //
+        不可逆运算， 数据
+ */
+- (void)runloopCreat{
+    //创建一个队列
+    dispatch_queue_t queue =dispatch_get_global_queue(0, 0);
+    self.runloopTime =dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
+    //GCD的时间参数
+    dispatch_time_t start =DISPATCH_TIME_NOW;
+    //每一秒就 打印一次
+    dispatch_time_t interval =1* NSEC_PER_SEC;
+    
+    dispatch_source_set_timer(self.runloopTime, start, interval, 0);
+   
+    //设置定时器回调
+    dispatch_source_set_event_handler(self.runloopTime, ^{
+        NSLog(@"---------------%@",[NSThread currentThread]);
+    });
+    //启动定时器
+    dispatch_resume(self.runloopTime);
+
+ 
+    
+//    NSThread  * thread  = [[NSThread  alloc ]  initWithBlock:^ {
+//        NSTimer *timer =[NSTimer timerWithTimeInterval:1.0 target:self selector:@selector(timerMethod) userInfo:nil repeats:YES];
+//        [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
+//        
+//        //让子线程的Runloop
+//    }]
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+//       dispatch_cancel(self.runloopTime);
+}
+
+- (void)addRunloop{
+    
+    [self addRunloopObserver];
+    
+//    _timer =[NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(timerMethod) userInfo:nil repeats:YES];
+    _maxQueueLength =20;
+    _tasks =[NSMutableArray array];
+}
+
+- (void)addTasks:(RunloopBlock)task{
+    //保存新的任务
+    [self.tasks addObject:task];
+    //干掉之前任务
+    if(self.tasks.count >self.maxQueueLength){
+        [self.tasks removeObjectAtIndex:0];
+    }
+}
+
+
+//回调
+static void Callback(CFRunLoopObserverRef observer, CFRunLoopActivity activity,void *info){
+    NSLog(@"此处 执行 你想要的操作");
+    //1, 拿到控制器对象
+//    ViewController *vc=(__bridge ViewController *)info;
+//    if (vc.tasks.count ==0) {
+//        return;
+//    }
+//    //2, 从数组里面取出任务
+//    RunloopBlock task =vc.tasks.firstObject;
+//    //3, 执行
+//    task();
+//    //4, 干掉已经执行完毕的任务
+//    [vc.tasks removeObjectAtIndex:0];
+}
+
+- (void)addRunloopObserver{
+    
+    //1,获取当前Runloop
+    CFRunLoopRef runloop =CFRunLoopGetCurrent();
+    //2, 创建观察者  ，定义上下文
+    CFRunLoopObserverContext context ={
+
+        0,
+        (__bridge void *)(self),
+        &CFRetain,
+        &CFRelease,
+        NULL
+    };
+    
+    //2.1 定义观察者
+    static CFRunLoopObserverRef defaultModeObserver;
+    //2.2 创建观察者
+    defaultModeObserver =CFRunLoopObserverCreate(NULL, kCFRunLoopBeforeWaiting, YES, 0, &Callback, &context);
+    
+    //3. 给当前 Runloop添加观察者
+    CFRunLoopAddObserver(runloop, defaultModeObserver, kCFRunLoopCommonModes);
+    //释放，防止内存泄漏
+    CFRelease(defaultModeObserver);
+    
+}
+
+
+#pragma mark - 二维码生成
+- (void)QRcodeCreat{
+    
+    UIImage *img =[UIImage imageOfQRFromURL:@"http://www.habav.com/" codeSize:500 red:0 green:100.0 blue:100.0 insertImage:[UIImage imageNamed:@"1"] roundRadius:200.0f];
+    UIImageView *imgV =[[UIImageView alloc ] initWithFrame:((CGRect){(CGPointZero) ,img.size})];
+    imgV.center =self.view.center;
+    imgV.image =img;
+    [self.view addSubview:imgV];
 }
 
 #pragma mark - 打开加速计和 陀螺仪
+
 - (void)controlHardware{
     
     self.motionManager =[[CMMotionManager alloc] init];
@@ -607,7 +977,7 @@ bool isSearch;
 
 
 #pragma mark - 跑步内容
-
+/**
 - (void)timerCount{
     
     
@@ -655,7 +1025,7 @@ bool isSearch;
 
 
 #pragma mark - 用数据视图 加载网络 图片和json
-/**
+
 - (void)tablebarCreat{
     
     self.title =@"加载网络图片文字 demo";
@@ -778,31 +1148,112 @@ bool isSearch;
     return 80;
 }
 **/
-#pragma mark - 播放视频
+#pragma mark - 音频播放器
+- (void)creatMusic{
+    NSLog(@"音频播放");
+//    MPMusicPlayerController *MusicVC =[[MPMusicPlayerController alloc] init];
+    self.musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
+}
+
+#pragma mark - 视频播放器
 - (void)creatVieo{
     
     //创建一个字符串，保存视频的网络地址
-    NSString* strURl =@"http://data.vod.itc.cn/?rb=1&prot=1&key=jbZhEJhlqlUN-Wj_HEI8BjaVqKNFvDrn&......dynrybyS1E.mp4";
+    NSString* strURl =@"http://xinhabavtest.oss-cn-qingdao.aliyuncs.com/VID_20170328_192544.mp4";
     NSURL* url =[NSURL URLWithString:strURl];
     
     //创建一个视图播放器对象
     _playController =[[MPMoviePlayerController alloc] initWithContentURL:url];
     //视图大小赋值
-    _playController.view.frame =self.view.bounds;
+    _playController.view.frame =CGRectMake(0, 50, 400, 300);
     //视频下载后 的处理编解码的过程
     [_playController prepareToPlay];
     //将播放器添加到 当前视图上
     [self.view addSubview:_playController.view];
-    
+    NSLog(@"hello");
     //创建另一个视图播放控制器 ，这一个可以横屏 和竖屏 切换
 //    _playerView =[[MPMoviePlayerViewController alloc] initWithContentURL:url];
 //    _playerView.view.frame =self.view.bounds;
 //    [self.view addSubview:_playerView.view];
+ 
+    //选择界面
+    MPMediaPickerController *mediaPicker =[[MPMediaPickerController alloc] init];
+    mediaPicker.delegate =self;
+    [self presentViewController:mediaPicker animated:YES completion:^{
+        NSLog(@"成功弹出");
+    }];
+    
+    
+//    mediaPicker.view.frame =CGRectMake(0, 400, kscreen.width, 200);
+//    [self.view addSubview:mediaPicker.view];
 }
 
-#pragma mark - 播放音乐进度条
+- (void)mediaPicker:(MPMediaPickerController *)mediaPicker didPickMediaItems:(MPMediaItemCollection *)mediaItemCollection{
+    
+    [self.musicPlayer setQueueWithItemCollection:mediaItemCollection];
+    NSLog(@"didPickMediaItems");
+    //列出选择歌曲清单
+    NSMutableString *strTitle =[[NSMutableString alloc] initWithString:@""];
+    for (MPMediaItem *item in [mediaItemCollection items]) {
+        
+        [strTitle appendString:[item valueForProperty:MPMediaItemPropertyTitle]];
+        [strTitle appendString:@"\n"];
+    }
+    [self dismissViewControllerAnimated:YES completion:^{
+        NSLog(@"选中");
+    }];
+    
+    NSLog(@"didPickMediaItems");
+}
+
+- (void)mediaPickerDidCancel:(MPMediaPickerController *)mediaPicker{
+    
+    NSLog(@"cancel");
+    [self dismissViewControllerAnimated:YES completion:^{
+        NSLog(@"返回主页面");
+    }];
+}
+
+#pragma mark - 系统提示音
+- (void)playNotifySound{
+    
+    //获取路径
+    NSString *path =[[NSBundle mainBundle] pathForResource:@"许巍 - 温暖" ofType:@"mp3"];
+    //定义一个 系统声音id
+    SystemSoundID soundID;
+    //判断路径是否存在
+    if(path){
+        
+        CFURLRef inFileURL  = (CFURLRef)CFBridgingRetain([NSURL fileURLWithPath:path]);
+        //创建一个音频文件 的播放系统声音服务器
+        OSStatus error =AudioServicesCreateSystemSoundID(inFileURL, &soundID);
+        
+        //判断是否有错误
+        if(error !=kAudioServicesNoError){
+            NSLog(@"%d",(int)error);
+            return;
+        }
+        //1,  播放声音 和振动
+        AudioServicesPlayAlertSoundWithCompletion(soundID, ^{
+            //播放成功回调
+            NSLog(@"播放成功回调");
+        });
+//        //2 ,只播放声音，没振动
+//        AudioServicesPlaySystemSound(soundID);
+//        //3,  手机只振动没声音
+//        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    }
+
+    
+}
+
+
+#pragma mark - 播放音乐 和进度条
 //创建一个音频控制器
 - (void)creatAVPlayer{
+    
+    //设置后台仍运行
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     
     //获取本地资源mp3文件的方法。，文件名 和扩展名
     NSString* str =[[NSBundle mainBundle] pathForResource:@"许巍 - 温暖" ofType:@"mp3"];
@@ -1619,10 +2070,10 @@ bool isSearch;
 
 
 //点击屏幕空白， 键盘就自动会隐藏
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    [_textField resignFirstResponder];
-    [self.textview resignFirstResponder];
-}
+//- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+//    [_textField resignFirstResponder];
+//    [self.textview resignFirstResponder];
+//}
 
 
 - (void)didReceiveMemoryWarning {

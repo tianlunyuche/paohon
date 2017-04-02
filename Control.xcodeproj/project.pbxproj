@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0AAB5CE5A462CE6DCE3B80F1 /* libPods-Control.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F24C81DA6C03876BB79E5CEC /* libPods-Control.a */; };
 		351500931E5010F300FD4BAB /* 许巍 - 温暖.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 351500921E5010F300FD4BAB /* 许巍 - 温暖.mp3 */; };
 		351500E11E502A6F00FD4BAB /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 351500D51E502A6F00FD4BAB /* AFHTTPSessionManager.m */; };
 		351500E21E502A6F00FD4BAB /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 351500D81E502A6F00FD4BAB /* AFNetworkReachabilityManager.m */; };
@@ -19,6 +20,15 @@
 		3516C1161E2B312000847A45 /* FirstVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3516C1151E2B312000847A45 /* FirstVC.m */; };
 		3516C1191E2B313A00847A45 /* SecondVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3516C1181E2B313A00847A45 /* SecondVC.m */; };
 		3516C11C1E2B314900847A45 /* ThirdVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3516C11B1E2B314900847A45 /* ThirdVC.m */; };
+		352D1A901E84378500659DBF /* UIImage+ZXQRcode.m in Sources */ = {isa = PBXBuildFile; fileRef = 352D1A8F1E84378500659DBF /* UIImage+ZXQRcode.m */; };
+		356D75AB1E8FA42D0014F6F7 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 356D75AA1E8FA42D0014F6F7 /* AddressBook.framework */; };
+		356D75AD1E8FA4320014F6F7 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 356D75AC1E8FA4320014F6F7 /* AddressBookUI.framework */; };
+		356D75B01E8FAA830014F6F7 /* LoopQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 356D75AF1E8FAA830014F6F7 /* LoopQueue.m */; };
+		358B64881E84468F006AEB63 /* UIImage+RoundRectImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 358B64871E84468F006AEB63 /* UIImage+RoundRectImage.m */; };
+		35A8B8BA1E90C123009BBFC5 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A8B8B91E90C123009BBFC5 /* CoreLocation.framework */; };
+		35A8B8BC1E90D471009BBFC5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A8B8BB1E90D471009BBFC5 /* MapKit.framework */; };
+		35A8B8C01E90D9EE009BBFC5 /* ZXAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A8B8BF1E90D9EE009BBFC5 /* ZXAnnotation.m */; };
+		35A8B8C31E90DFB8009BBFC5 /* ZXCalloutAnnotatonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A8B8C21E90DFB8009BBFC5 /* ZXCalloutAnnotatonView.m */; };
 		35BC884E1E34CCAC00322847 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 35BC884D1E34CCAC00322847 /* MBProgressHUD.m */; };
 		35BE79651E7B8BF900181216 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35BE79641E7B8BF900181216 /* CoreMotion.framework */; };
 		35C797871E2A389000F69E33 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C797861E2A389000F69E33 /* main.m */; };
@@ -27,7 +37,6 @@
 		35C797901E2A389000F69E33 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35C7978E1E2A389000F69E33 /* Main.storyboard */; };
 		35C797921E2A389000F69E33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35C797911E2A389000F69E33 /* Assets.xcassets */; };
 		35C797951E2A389000F69E33 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35C797931E2A389000F69E33 /* LaunchScreen.storyboard */; };
-		679B2F3554563E1F995B7307 /* libPods-Control.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DE559C592C971C128D86FD6 /* libPods-Control.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,7 +74,22 @@
 		3516C1181E2B313A00847A45 /* SecondVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondVC.m; sourceTree = "<group>"; };
 		3516C11A1E2B314900847A45 /* ThirdVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdVC.h; sourceTree = "<group>"; };
 		3516C11B1E2B314900847A45 /* ThirdVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdVC.m; sourceTree = "<group>"; };
+		352D1A8E1E84378500659DBF /* UIImage+ZXQRcode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ZXQRcode.h"; sourceTree = "<group>"; };
+		352D1A8F1E84378500659DBF /* UIImage+ZXQRcode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ZXQRcode.m"; sourceTree = "<group>"; };
+		356D75AA1E8FA42D0014F6F7 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		356D75AC1E8FA4320014F6F7 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		356D75AE1E8FAA830014F6F7 /* LoopQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoopQueue.h; sourceTree = "<group>"; };
+		356D75AF1E8FAA830014F6F7 /* LoopQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoopQueue.m; sourceTree = "<group>"; };
 		3588996A1E2E265500A5D92D /* ControlUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ControlUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		358B64861E84468F006AEB63 /* UIImage+RoundRectImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundRectImage.h"; sourceTree = "<group>"; };
+		358B64871E84468F006AEB63 /* UIImage+RoundRectImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundRectImage.m"; sourceTree = "<group>"; };
+		35A8B8B91E90C123009BBFC5 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		35A8B8BB1E90D471009BBFC5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		35A8B8BD1E90D583009BBFC5 /* ZXMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZXMacro.h; sourceTree = "<group>"; };
+		35A8B8BE1E90D9EE009BBFC5 /* ZXAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXAnnotation.h; sourceTree = "<group>"; };
+		35A8B8BF1E90D9EE009BBFC5 /* ZXAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXAnnotation.m; sourceTree = "<group>"; };
+		35A8B8C11E90DFB8009BBFC5 /* ZXCalloutAnnotatonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXCalloutAnnotatonView.h; sourceTree = "<group>"; };
+		35A8B8C21E90DFB8009BBFC5 /* ZXCalloutAnnotatonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXCalloutAnnotatonView.m; sourceTree = "<group>"; };
 		35BC884C1E34CCAC00322847 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		35BC884D1E34CCAC00322847 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		35BE79641E7B8BF900181216 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
@@ -81,7 +105,7 @@
 		35C797961E2A389000F69E33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		481A003E61DC829518BC749B /* Pods-Control.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Control.release.xcconfig"; path = "Pods/Target Support Files/Pods-Control/Pods-Control.release.xcconfig"; sourceTree = "<group>"; };
 		706B401B0722D0896B86AE11 /* Pods-Control.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Control.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Control/Pods-Control.debug.xcconfig"; sourceTree = "<group>"; };
-		7DE559C592C971C128D86FD6 /* libPods-Control.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Control.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F24C81DA6C03876BB79E5CEC /* libPods-Control.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Control.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,8 +120,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35A8B8BA1E90C123009BBFC5 /* CoreLocation.framework in Frameworks */,
+				356D75AD1E8FA4320014F6F7 /* AddressBookUI.framework in Frameworks */,
+				356D75AB1E8FA42D0014F6F7 /* AddressBook.framework in Frameworks */,
 				35BE79651E7B8BF900181216 /* CoreMotion.framework in Frameworks */,
-				679B2F3554563E1F995B7307 /* libPods-Control.a in Frameworks */,
+				35A8B8BC1E90D471009BBFC5 /* MapKit.framework in Frameworks */,
+				0AAB5CE5A462CE6DCE3B80F1 /* libPods-Control.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,8 +135,12 @@
 		0CE5716C63401BAE67F4C98A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				35A8B8BB1E90D471009BBFC5 /* MapKit.framework */,
+				35A8B8B91E90C123009BBFC5 /* CoreLocation.framework */,
+				356D75AC1E8FA4320014F6F7 /* AddressBookUI.framework */,
+				356D75AA1E8FA42D0014F6F7 /* AddressBook.framework */,
 				35BE79641E7B8BF900181216 /* CoreMotion.framework */,
-				7DE559C592C971C128D86FD6 /* libPods-Control.a */,
+				F24C81DA6C03876BB79E5CEC /* libPods-Control.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -131,6 +163,17 @@
 				351500E01E502A6F00FD4BAB /* AFURLSessionManager.m */,
 			);
 			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		352D1A8B1E842FD800659DBF /* Catogory */ = {
+			isa = PBXGroup;
+			children = (
+				352D1A8E1E84378500659DBF /* UIImage+ZXQRcode.h */,
+				352D1A8F1E84378500659DBF /* UIImage+ZXQRcode.m */,
+				358B64861E84468F006AEB63 /* UIImage+RoundRectImage.h */,
+				358B64871E84468F006AEB63 /* UIImage+RoundRectImage.m */,
+			);
+			name = Catogory;
 			sourceTree = "<group>";
 		};
 		35C797791E2A389000F69E33 = {
@@ -156,10 +199,17 @@
 		35C797841E2A389000F69E33 /* Control */ = {
 			isa = PBXGroup;
 			children = (
+				352D1A8B1E842FD800659DBF /* Catogory */,
 				35C797881E2A389000F69E33 /* AppDelegate.h */,
 				35C797891E2A389000F69E33 /* AppDelegate.m */,
 				35C7978B1E2A389000F69E33 /* ViewController.h */,
 				35C7978C1E2A389000F69E33 /* ViewController.m */,
+				35A8B8C11E90DFB8009BBFC5 /* ZXCalloutAnnotatonView.h */,
+				35A8B8C21E90DFB8009BBFC5 /* ZXCalloutAnnotatonView.m */,
+				35A8B8BE1E90D9EE009BBFC5 /* ZXAnnotation.h */,
+				35A8B8BF1E90D9EE009BBFC5 /* ZXAnnotation.m */,
+				356D75AE1E8FAA830014F6F7 /* LoopQueue.h */,
+				356D75AF1E8FAA830014F6F7 /* LoopQueue.m */,
 				351502D01E50B0D800FD4BAB /* TableViewController.h */,
 				351502D11E50B0D800FD4BAB /* TableViewController.m */,
 				3516C1141E2B312000847A45 /* FirstVC.h */,
@@ -186,6 +236,7 @@
 				35C797861E2A389000F69E33 /* main.m */,
 				351500EA1E502C4900FD4BAB /* BookModel.h */,
 				351500EB1E502C4900FD4BAB /* BookModel.m */,
+				35A8B8BD1E90D583009BBFC5 /* ZXMacro.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -255,6 +306,12 @@
 					};
 					35C797811E2A389000F69E33 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 2K8YQD53SK;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -359,6 +416,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				351500E41E502A6F00FD4BAB /* AFURLRequestSerialization.m in Sources */,
+				35A8B8C01E90D9EE009BBFC5 /* ZXAnnotation.m in Sources */,
 				3516C11C1E2B314900847A45 /* ThirdVC.m in Sources */,
 				35C7978D1E2A389000F69E33 /* ViewController.m in Sources */,
 				351500EC1E502C4900FD4BAB /* BookModel.m in Sources */,
@@ -366,12 +424,16 @@
 				351500E61E502A6F00FD4BAB /* AFURLSessionManager.m in Sources */,
 				351500E31E502A6F00FD4BAB /* AFSecurityPolicy.m in Sources */,
 				351500E21E502A6F00FD4BAB /* AFNetworkReachabilityManager.m in Sources */,
+				358B64881E84468F006AEB63 /* UIImage+RoundRectImage.m in Sources */,
+				356D75B01E8FAA830014F6F7 /* LoopQueue.m in Sources */,
 				35C7978A1E2A389000F69E33 /* AppDelegate.m in Sources */,
+				352D1A901E84378500659DBF /* UIImage+ZXQRcode.m in Sources */,
 				351500E11E502A6F00FD4BAB /* AFHTTPSessionManager.m in Sources */,
 				3516C1191E2B313A00847A45 /* SecondVC.m in Sources */,
 				35C797871E2A389000F69E33 /* main.m in Sources */,
 				35BC884E1E34CCAC00322847 /* MBProgressHUD.m in Sources */,
 				351502D21E50B0D800FD4BAB /* TableViewController.m in Sources */,
+				35A8B8C31E90DFB8009BBFC5 /* ZXCalloutAnnotatonView.m in Sources */,
 				351500E51E502A6F00FD4BAB /* AFURLResponseSerialization.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -515,9 +577,10 @@
 			baseConfigurationReference = 706B401B0722D0896B86AE11 /* Pods-Control.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Control/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.paohon.Control;
+				PRODUCT_BUNDLE_IDENTIFIER = com.habav.Control;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -527,9 +590,10 @@
 			baseConfigurationReference = 481A003E61DC829518BC749B /* Pods-Control.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Control/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.paohon.Control;
+				PRODUCT_BUNDLE_IDENTIFIER = com.habav.Control;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

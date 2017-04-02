@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ZXMacro.h"
 
 #import <AVFoundation/AVFoundation.h>
 #import "MediaPlayer/MediaPlayer.h"
@@ -18,6 +19,21 @@
 #import <AudioToolbox/AudioToolbox.h>
 //提供音频和回放的底层API ，负责管理音频硬件
 //#import <AVFoundation/AVFoundation.h>
+
+//--------通讯录
+#import <AddressBook/AddressBook.h>
+#import "AddressBookUI/AddressBookUI.h"
+
+
+#import <AVFoundation/AVFoundation.h>
+#import "MediaPlayer/MediaPlayer.h"
+//主要用于在线流媒体的播放
+#import <AudioToolbox/AudioToolbox.h>
+//提供音频和回放的底层API ，负责管理音频硬件
+//#import <AVFoundation/AVFoundation.h>
+#import "AFNetworking.h"
+//#import "UIImageView+WebCache.h"
+#import "BookModel.h"
 
 
 @interface ViewController : UIViewController
@@ -130,7 +146,6 @@
 
 @property(nonatomic,strong)UITextView *textview;
 
-@property (strong, nonatomic) CMMotionManager *motionManager;
 
 @end
 
