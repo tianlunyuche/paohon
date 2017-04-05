@@ -22,6 +22,7 @@
 //大头针
 #import "ZXAnnotation.h"
 #import "ZXCalloutAnnotatonView.h"
+#import "ZXAlert.h"
 
 //#import <ReactiveCocoa/ReactiveCocoa.h>
 
@@ -51,6 +52,7 @@ typedef void(^RunloopBlock) (void);
 @property (strong, nonatomic)CLGeocoder *geocoder;
 
 @property(strong,nonatomic) MKMapView *mapView;
+
 
 @end
 
@@ -122,10 +124,112 @@ typedef void(^RunloopBlock) (void);
 //    [self creatMusic];
 //    [self creatVieo];
 //    [self Creatgeocoder];
-      [self CreatMap];
+//      [self CreatMap];
+//    [self CreatMyMap];
+//    [self UIAlertViewCreat];
+//    [self PanGesture];
+    [self searchView];
 }
 
-#pragma mark - 地图 和大头针
+- (void)searchView{
+    
+    UISearchController *search =[[UISearchController alloc] init];
+
+    [self presentViewController:search animated:YES completion:nil];
+}
+
+- (void)PanGesture{
+    
+//    UIPanGestureRecognizer *pan =[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+    
+    _imageView =kImgV(@"green_button_n");
+    _imageView.frame =CGRectMake(10, 100, 100, 30);
+    _imageView.userInteractionEnabled=YES;
+    [self.view addSubview:_imageView];
+    
+    UISwipeGestureRecognizer *left= [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+    left.numberOfTouchesRequired =1;
+    [left setDirection:UISwipeGestureRecognizerDirectionLeft];
+    [_imageView addGestureRecognizer:left];
+    
+    UISwipeGestureRecognizer *rightRecognizer= [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+    rightRecognizer.numberOfTouchesRequired =1;
+    [rightRecognizer setDirection: UISwipeGestureRecognizerDirectionRight];
+    [_imageView addGestureRecognizer:rightRecognizer];
+}
+
+- (void)handlePan:(UISwipeGestureRecognizer *)sender{
+//    
+//    CGPoint point =[rec translationInView:self.view];
+//    NSLog(@"%f  ,%f",point.x ,point.y);
+//    rec.view.center =CGPointMake(rec.view.center.x +point.x, rec.view.center.y +point.y);
+//    [rec setTranslation:CGPointMake(0, 0) inView:self.view];
+    CATransition *transition =[CATransition animation];
+    transition.type =kCATransitionReveal;
+    
+    if (sender.direction == UISwipeGestureRecognizerDirectionLeft) {
+  
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationCurve:UIViewAnimationCurveLinear];
+
+        
+        [_imageView setFrame:CGRectMake(_imageView.frame.origin.x-sender.view.center.x, _imageView.frame.origin.y, _imageView.frame.size.width, _imageView.frame.size.height)];
+         NSLog(@"sender.view.center.x =%f",sender.view.center.x);
+        [UIView commitAnimations];
+    }
+    
+    if (sender.direction == UISwipeGestureRecognizerDirectionRight) {
+        
+
+//         transition.subtype = kCATransitionFromLeft;
+//        [_imageView.layer addAnimation:transition forKey:nil];
+////        [_imageView setFrame:CGRectMake(_imageView.frame.origin.x+50, _imageView.frame.origin.y, _imageView.frame.size.width, _imageView.frame.size.height)];
+//         NSLog(@"%@",transition);
+//            [UIView commitAnimations];
+        
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationCurve:UIViewAnimationCurveLinear];
+        
+        [_imageView setFrame:CGRectMake(_imageView.frame.origin.x +sender.view.center.x, _imageView.frame.origin.y, _imageView.frame.size.width, _imageView.frame.size.height)];
+        NSLog(@"%f",sender.view.center.x);
+        [UIView commitAnimations];
+        }
+    
+    NSLog(@"%ld",sender.direction);
+
+}
+
+#pragma mark - 使用手机自带的地图
+- (void)CreatMyMap{
+    
+    _geocoder=[[CLGeocoder alloc]init];
+    [_geocoder geocodeAddressString:@"广州市番禺区" completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        //获取第一个地标
+        CLPlacemark *clPlacemark =[placemarks firstObject];
+        NSLog(@"%@",placemarks);
+        //定位地标 转换成 地图地标
+        MKPlacemark *mkplacemark1 =[[MKPlacemark alloc] initWithPlacemark:clPlacemark];
+        
+        //注意地理编码一次只能定位到一个位置，不能同时定位，所在放到第一个位置定位完成回调函数中再次定位
+        [_geocoder geocodeAddressString:@"广州市天河区" completionHandler:^(NSArray *placemarks, NSError *error) {
+            
+            CLPlacemark *clPlacemark2=[placemarks firstObject];//获取第一个地标
+            MKPlacemark *mkPlacemark2=[[MKPlacemark alloc]initWithPlacemark:clPlacemark2];
+            
+            NSDictionary *options=@{MKLaunchOptionsMapTypeKey:@(MKMapTypeStandard)};
+//            MKMapItem *mapItem0=[MKMapItem mapItemForCurrentLocation];//当前位置
+            MKMapItem *mapItem1=[[MKMapItem alloc]initWithPlacemark:mkplacemark1];
+            MKMapItem *mapItem2=[[MKMapItem alloc]initWithPlacemark:mkPlacemark2];
+//            [MKMapItem openMapsWithItems:@[mapItem1,mapItem2] launchOptions:options];
+            [mapItem1 openInMapsWithLaunchOptions:options];
+            [mapItem2 openInMapsWithLaunchOptions:options];
+        }];
+
+    }];
+}
+
+
+#pragma mark - Mapkit 地图 和大头针
 - (void)CreatMap{
     
     _mapView =[[MKMapView alloc] initWithFrame:kScreenBounds];
@@ -134,7 +238,8 @@ typedef void(^RunloopBlock) (void);
     _mapView.delegate =self;
     //请求定位服务
     CLLocationManager *locationMgr=[[CLLocationManager alloc] init];
-    if(![CLLocationManager locationServicesEnabled]||[CLLocationManager authorizationStatus]!=kCLAuthorizationStatusAuthorizedWhenInUse){
+    if(![CLLocationManager locationServicesEnabled]||
+        [CLLocationManager authorizationStatus]!=kCLAuthorizationStatusAuthorizedWhenInUse){
         [locationMgr requestWhenInUseAuthorization];
     }
     
@@ -1822,9 +1927,22 @@ bool isSearch;
     //提示对话框创建
     if(btn.tag ==101){
         //otherButtonTitles添加其他按钮
-        _alerView =[[UIAlertView alloc] initWithTitle:@"提示" message:@"确定要退出吗？" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"ok",@"等会",@"考虑下", nil];
-        //显示提示框
-        [_alerView show];
+//        _alerView =[[UIAlertView alloc] initWithTitle:@"提示" message:@"确定要退出吗？" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"ok",@"等会",@"考虑下", nil];
+//        //显示提示框
+//        [_alerView show];
+        ZXAlert *alert =[ZXAlert alertControllerWithTitle:@"是否进入轨迹\n\n\n" message:@"活动已结束，是否进入查看轨迹页面ooooooo" preferredStyle:UIAlertControllerStyleAlert];
+        [alert.view addSubview:kImgV(@"alert")];
+        [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            NSLog(@"确定");
+        }]];
+        [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            
+            NSLog(@"取消");
+        }]];
+        //        [cancelAction setValue:[UIColor lightGrayColor] forKey:@"titleTextColor"];
+        [self presentViewController:alert animated:YES completion:nil];
+        
     }
     else if( btn.tag ==102){
         //创建等待提示器

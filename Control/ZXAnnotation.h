@@ -23,7 +23,7 @@
 @property (nonatomic,strong) UIImage *icon;
 //大头针详情描述
 @property (nonatomic,copy) NSString *detail;
-//大头针右下方星级评价
+//大头针右下方
 @property (nonatomic,strong) UIImage *rate;
 
 @end

@@ -25,6 +25,7 @@
 		356D75AD1E8FA4320014F6F7 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 356D75AC1E8FA4320014F6F7 /* AddressBookUI.framework */; };
 		356D75B01E8FAA830014F6F7 /* LoopQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 356D75AF1E8FAA830014F6F7 /* LoopQueue.m */; };
 		358B64881E84468F006AEB63 /* UIImage+RoundRectImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 358B64871E84468F006AEB63 /* UIImage+RoundRectImage.m */; };
+		35A3E3B31E93B8C20051DA11 /* ZXAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A3E3B21E93B8C20051DA11 /* ZXAlert.m */; };
 		35A8B8BA1E90C123009BBFC5 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A8B8B91E90C123009BBFC5 /* CoreLocation.framework */; };
 		35A8B8BC1E90D471009BBFC5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A8B8BB1E90D471009BBFC5 /* MapKit.framework */; };
 		35A8B8C01E90D9EE009BBFC5 /* ZXAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A8B8BF1E90D9EE009BBFC5 /* ZXAnnotation.m */; };
@@ -83,6 +84,8 @@
 		3588996A1E2E265500A5D92D /* ControlUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ControlUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		358B64861E84468F006AEB63 /* UIImage+RoundRectImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundRectImage.h"; sourceTree = "<group>"; };
 		358B64871E84468F006AEB63 /* UIImage+RoundRectImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundRectImage.m"; sourceTree = "<group>"; };
+		35A3E3B11E93B8C20051DA11 /* ZXAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXAlert.h; sourceTree = "<group>"; };
+		35A3E3B21E93B8C20051DA11 /* ZXAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXAlert.m; sourceTree = "<group>"; };
 		35A8B8B91E90C123009BBFC5 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		35A8B8BB1E90D471009BBFC5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		35A8B8BD1E90D583009BBFC5 /* ZXMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZXMacro.h; sourceTree = "<group>"; };
@@ -204,6 +207,8 @@
 				35C797891E2A389000F69E33 /* AppDelegate.m */,
 				35C7978B1E2A389000F69E33 /* ViewController.h */,
 				35C7978C1E2A389000F69E33 /* ViewController.m */,
+				35A3E3B11E93B8C20051DA11 /* ZXAlert.h */,
+				35A3E3B21E93B8C20051DA11 /* ZXAlert.m */,
 				35A8B8C11E90DFB8009BBFC5 /* ZXCalloutAnnotatonView.h */,
 				35A8B8C21E90DFB8009BBFC5 /* ZXCalloutAnnotatonView.m */,
 				35A8B8BE1E90D9EE009BBFC5 /* ZXAnnotation.h */,
@@ -418,6 +423,7 @@
 				351500E41E502A6F00FD4BAB /* AFURLRequestSerialization.m in Sources */,
 				35A8B8C01E90D9EE009BBFC5 /* ZXAnnotation.m in Sources */,
 				3516C11C1E2B314900847A45 /* ThirdVC.m in Sources */,
+				35A3E3B31E93B8C20051DA11 /* ZXAlert.m in Sources */,
 				35C7978D1E2A389000F69E33 /* ViewController.m in Sources */,
 				351500EC1E502C4900FD4BAB /* BookModel.m in Sources */,
 				3516C1161E2B312000847A45 /* FirstVC.m in Sources */,
