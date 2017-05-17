@@ -93,6 +93,10 @@
     _musicProgress =[[UIProgressView alloc] init];
     _musicProgress.frame =CGRectMake(10, 300, 300, 20);
     _musicProgress.progress =0;
+    
+    UILabel *labl=[[UILabel alloc] initWithFrame:CGRectMake(10, 318, 100, 40)];
+    labl.text =@"调节音量：";
+    [self.view addSubview:labl];
     //滑动块 设置声音大小
     _volumeSlider =[[UISlider alloc] initWithFrame:CGRectMake(10, 360, 300, 40)];
     _volumeSlider.maximumValue =100;

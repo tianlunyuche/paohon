@@ -26,6 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self CreatMap];
 }
 
 #pragma mark - Mapkit 地图 和大头针
@@ -61,7 +62,7 @@
     annotation.coordinate =CLLocationCoordinate2DMake(23.11, 113.27);
     annotation.image =[UIImage imageNamed:@"tag_selected"];
     annotation.icon=[UIImage imageNamed:@"alert_big_icon"];
-    annotation.detail=@"lucky...";
+    annotation.detail=@"幸运儿";
     annotation.rate=[UIImage imageNamed:@"ssdk_oks_classic_qq"];
     
     return annotation;
@@ -74,7 +75,7 @@
     annotation.coordinate =CLLocationCoordinate2DMake(25.11, 115.27);
     annotation.image =[UIImage imageNamed:@"date_select_p"];
     annotation.icon=[UIImage imageNamed:@"rll_progress"];
-    annotation.detail=@"666...";
+    annotation.detail=@"这里";
     annotation.rate=[UIImage imageNamed:@"ssdk_oks_classic_qzone"];
     
     return annotation;
@@ -83,7 +84,7 @@
 - (ZXAnnotation *)annotation{
     
     ZXAnnotation *annotation =[[ZXAnnotation alloc] init];
-    annotation.title =@"xin";
+    annotation.title =@"❤️";
     annotation.subtitle =@"The more effort ,the more lucky";
     annotation.coordinate =CLLocationCoordinate2DMake(23.11, 113.27);
     annotation.image =[UIImage imageNamed:@"tag_selected"];
