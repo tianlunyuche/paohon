@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "ViewController.h"
+#import "TableViewController.h"
 
 @interface AppDelegate ()
 
@@ -24,7 +24,7 @@
 //    self.window =[[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor =[UIColor whiteColor];
     
-    ViewController* rootVC =[[ViewController alloc] init];
+    TableViewController* rootVC =[[TableViewController alloc] init];
     UINavigationController* navVC =[[UINavigationController alloc] initWithRootViewController:rootVC];
     self.window.rootViewController =navVC;
     [self.window makeKeyAndVisible];

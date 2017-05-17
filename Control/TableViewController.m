@@ -7,7 +7,10 @@
 //
 
 #import "TableViewController.h"
-
+#import "ZXCreatMyMapVC.h"
+#import "ZXQRcodeVC.h"
+#import "ZXMapkitVC.h"
+#import "ZXAVPlayerVC.h"
 @interface TableViewController ()
 
 @end
@@ -29,38 +32,73 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
-// 返回每一行的内容
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+
+#pragma mark - UITableViewDelegate
+//选中单元格要调用此协议函数
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    UITableViewCell* cell =[[UITableViewCell alloc] init];
-    cell.textLabel.text =@"hello";
-    cell.imageView.image =[UIImage imageNamed:@"1"];
+    if ((indexPath.section == 0 )&& (indexPath.row == 0)) {
+        
+        [self.navigationController pushViewController:[[ZXCreatMyMapVC alloc] init] animated:YES];
+
+    }
+    if ((indexPath.section == 0 )&& (indexPath.row == 1)) {
     
-    return cell;
+        [self.navigationController pushViewController:[[ZXMapkitVC alloc] init] animated:YES];
+ 
+    }
+    if ((indexPath.section == 1 )&& (indexPath.row == 0)) {
+        
+        [self.navigationController pushViewController:[[ZXAVPlayerVC alloc] init] animated:YES];
+    }
+    if ((indexPath.section == 1 )&& (indexPath.row == 1)) {
+        
+        [self.navigationController pushViewController:[[ZXQRcodeVC alloc] init] animated:YES];
+    }
+    
+}
+
+//willDisplayCell
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.textLabel.text = [self tableTitles][indexPath.section][indexPath.row];
+
+}
+
+#pragma mark - UITableViewDataSource
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+        
+        UITableViewCell * cell = [[UITableViewCell alloc] init];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
+        return cell;
 }
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 1;
+
+    return [self tableTitles].count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 2;
+
+    return [self tableTitles][section].count;
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
-}
-*/
+#pragma mark - data
+- (NSArray <NSArray *> *)tableTitles {
+    return @[@[@"地图调用",
+               @"Mapkit地图"],
+             @[@"音乐播放",
+               @"二维码 生成"],
+             @[@"金库管理",
+               @"兑换商城"],
+             @[@"造星",
+               @"推荐给好友"],
+             @[@"规则问答"]];
+};
+
 
 /*
 // Override to support conditional editing of the table view.

@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		0AAB5CE5A462CE6DCE3B80F1 /* libPods-Control.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F24C81DA6C03876BB79E5CEC /* libPods-Control.a */; };
+		3503DC601EB75FAC008AD79E /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3503DC5F1EB75FAC008AD79E /* Social.framework */; };
+		350786DC1ECC0AE60040E238 /* ZXQRcodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 350786DB1ECC0AE60040E238 /* ZXQRcodeVC.m */; };
+		350786DF1ECC0C930040E238 /* ZXCreatMyMapVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 350786DE1ECC0C930040E238 /* ZXCreatMyMapVC.m */; };
+		350786E21ECC0D920040E238 /* ZXMapkitVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 350786E11ECC0D920040E238 /* ZXMapkitVC.m */; };
+		350786E51ECC0F1E0040E238 /* ZXAVPlayerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 350786E41ECC0F1E0040E238 /* ZXAVPlayerVC.m */; };
 		351500931E5010F300FD4BAB /* 许巍 - 温暖.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 351500921E5010F300FD4BAB /* 许巍 - 温暖.mp3 */; };
 		351500E11E502A6F00FD4BAB /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 351500D51E502A6F00FD4BAB /* AFHTTPSessionManager.m */; };
 		351500E21E502A6F00FD4BAB /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 351500D81E502A6F00FD4BAB /* AFNetworkReachabilityManager.m */; };
@@ -51,6 +56,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3503DC5F1EB75FAC008AD79E /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		350786DA1ECC0AE60040E238 /* ZXQRcodeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXQRcodeVC.h; sourceTree = "<group>"; };
+		350786DB1ECC0AE60040E238 /* ZXQRcodeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXQRcodeVC.m; sourceTree = "<group>"; };
+		350786DD1ECC0C930040E238 /* ZXCreatMyMapVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXCreatMyMapVC.h; sourceTree = "<group>"; };
+		350786DE1ECC0C930040E238 /* ZXCreatMyMapVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXCreatMyMapVC.m; sourceTree = "<group>"; };
+		350786E01ECC0D920040E238 /* ZXMapkitVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXMapkitVC.h; sourceTree = "<group>"; };
+		350786E11ECC0D920040E238 /* ZXMapkitVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXMapkitVC.m; sourceTree = "<group>"; };
+		350786E31ECC0F1E0040E238 /* ZXAVPlayerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXAVPlayerVC.h; sourceTree = "<group>"; };
+		350786E41ECC0F1E0040E238 /* ZXAVPlayerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXAVPlayerVC.m; sourceTree = "<group>"; };
 		351500921E5010F300FD4BAB /* 许巍 - 温暖.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "许巍 - 温暖.mp3"; sourceTree = "<group>"; };
 		351500D41E502A6F00FD4BAB /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
 		351500D51E502A6F00FD4BAB /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
@@ -123,6 +137,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3503DC601EB75FAC008AD79E /* Social.framework in Frameworks */,
 				35A8B8BA1E90C123009BBFC5 /* CoreLocation.framework in Frameworks */,
 				356D75AD1E8FA4320014F6F7 /* AddressBookUI.framework in Frameworks */,
 				356D75AB1E8FA42D0014F6F7 /* AddressBook.framework in Frameworks */,
@@ -138,6 +153,7 @@
 		0CE5716C63401BAE67F4C98A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3503DC5F1EB75FAC008AD79E /* Social.framework */,
 				35A8B8BB1E90D471009BBFC5 /* MapKit.framework */,
 				35A8B8B91E90C123009BBFC5 /* CoreLocation.framework */,
 				356D75AC1E8FA4320014F6F7 /* AddressBookUI.framework */,
@@ -207,6 +223,14 @@
 				35C797891E2A389000F69E33 /* AppDelegate.m */,
 				35C7978B1E2A389000F69E33 /* ViewController.h */,
 				35C7978C1E2A389000F69E33 /* ViewController.m */,
+				350786DA1ECC0AE60040E238 /* ZXQRcodeVC.h */,
+				350786DB1ECC0AE60040E238 /* ZXQRcodeVC.m */,
+				350786DD1ECC0C930040E238 /* ZXCreatMyMapVC.h */,
+				350786DE1ECC0C930040E238 /* ZXCreatMyMapVC.m */,
+				350786E31ECC0F1E0040E238 /* ZXAVPlayerVC.h */,
+				350786E41ECC0F1E0040E238 /* ZXAVPlayerVC.m */,
+				350786E01ECC0D920040E238 /* ZXMapkitVC.h */,
+				350786E11ECC0D920040E238 /* ZXMapkitVC.m */,
 				35A3E3B11E93B8C20051DA11 /* ZXAlert.h */,
 				35A3E3B21E93B8C20051DA11 /* ZXAlert.m */,
 				35A8B8C11E90DFB8009BBFC5 /* ZXCalloutAnnotatonView.h */,
@@ -422,6 +446,7 @@
 			files = (
 				351500E41E502A6F00FD4BAB /* AFURLRequestSerialization.m in Sources */,
 				35A8B8C01E90D9EE009BBFC5 /* ZXAnnotation.m in Sources */,
+				350786DC1ECC0AE60040E238 /* ZXQRcodeVC.m in Sources */,
 				3516C11C1E2B314900847A45 /* ThirdVC.m in Sources */,
 				35A3E3B31E93B8C20051DA11 /* ZXAlert.m in Sources */,
 				35C7978D1E2A389000F69E33 /* ViewController.m in Sources */,
@@ -430,13 +455,16 @@
 				351500E61E502A6F00FD4BAB /* AFURLSessionManager.m in Sources */,
 				351500E31E502A6F00FD4BAB /* AFSecurityPolicy.m in Sources */,
 				351500E21E502A6F00FD4BAB /* AFNetworkReachabilityManager.m in Sources */,
+				350786DF1ECC0C930040E238 /* ZXCreatMyMapVC.m in Sources */,
 				358B64881E84468F006AEB63 /* UIImage+RoundRectImage.m in Sources */,
 				356D75B01E8FAA830014F6F7 /* LoopQueue.m in Sources */,
 				35C7978A1E2A389000F69E33 /* AppDelegate.m in Sources */,
 				352D1A901E84378500659DBF /* UIImage+ZXQRcode.m in Sources */,
+				350786E21ECC0D920040E238 /* ZXMapkitVC.m in Sources */,
 				351500E11E502A6F00FD4BAB /* AFHTTPSessionManager.m in Sources */,
 				3516C1191E2B313A00847A45 /* SecondVC.m in Sources */,
 				35C797871E2A389000F69E33 /* main.m in Sources */,
+				350786E51ECC0F1E0040E238 /* ZXAVPlayerVC.m in Sources */,
 				35BC884E1E34CCAC00322847 /* MBProgressHUD.m in Sources */,
 				351502D21E50B0D800FD4BAB /* TableViewController.m in Sources */,
 				35A8B8C31E90DFB8009BBFC5 /* ZXCalloutAnnotatonView.m in Sources */,
