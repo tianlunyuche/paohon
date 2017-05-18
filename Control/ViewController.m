@@ -132,7 +132,6 @@ typedef void(^RunloopBlock) (void);
 //    [self threadCommunication];
     [self btnp];
 }
-
 #pragma mark - 线程间通信
 - (void)threadCommunication{
     
@@ -161,7 +160,6 @@ typedef void(^RunloopBlock) (void);
     _imageView.image = image;
     ZXLog(@"current thread3 = %@",[NSThread currentThread]);
 }
-
 #pragma mark - 图像处理
 
 //图像翻转

@@ -28,6 +28,19 @@
     return self;
 }
 
+//内容
+- (void)concreteContentwithFileName:(NSString *)name ofType:(NSString *)type{
+    
+    NSError *error =nil;
+    NSString *str=[NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:name ofType:type] encoding:NSUTF8StringEncoding error:&error];
+    if (!error) {
+        _contentView.text =str;
+        
+    }else{
+        ZXLog(@"flyweights file open error or not exit");
+    }
+}
+
 - (void)creatUI{
     CGRect textViewRect =CGRectInset(self.bounds, 10.0, 20.0);
     
@@ -47,15 +60,7 @@
     _contentView.scrollEnabled =YES;
     _contentView.keyboardDismissMode =UIScrollViewKeyboardDismissModeOnDrag;
     _contentView.font =[UIFont fontWithName:_textStorage.fontName size:18.0];
-    
-    NSError *error =nil;
-    NSString *str=[NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"flyweights" ofType:@"txt"] encoding:NSUTF8StringEncoding error:&error];
-    if (!error) {
-        _contentView.text =str;
-        
-    }else{
-        ZXLog(@"flyweights file open error or not exit");
-    }
+
     [self addSubview:_contentView];
     //通过attribute来改变文字的属性
     //        [_textStorage beginEditing];

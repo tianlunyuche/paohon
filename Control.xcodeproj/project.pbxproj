@@ -57,6 +57,7 @@
 		35D7F6CA1ECC66C800CB29B1 /* ConcreteWebSite.m in Sources */ = {isa = PBXBuildFile; fileRef = 35D7F6C91ECC66C800CB29B1 /* ConcreteWebSite.m */; };
 		35D7F6CE1ECC6AEF00CB29B1 /* ZXFlyWeightVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 35D7F6CD1ECC6AEF00CB29B1 /* ZXFlyWeightVC.m */; };
 		35D7F6D21ECC7FA300CB29B1 /* ZXTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 35D7F6D11ECC7FA300CB29B1 /* ZXTextStorage.m */; };
+		35F43F4C1ECD8635005D757E /* decoratorMode.txt in Resources */ = {isa = PBXBuildFile; fileRef = 35F43F4B1ECD8635005D757E /* decoratorMode.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -163,6 +164,7 @@
 		35D7F6CD1ECC6AEF00CB29B1 /* ZXFlyWeightVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZXFlyWeightVC.m; path = Control/DesignMode/Control/ZXFlyWeightVC.m; sourceTree = "<group>"; tabWidth = 4; };
 		35D7F6D01ECC7FA300CB29B1 /* ZXTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZXTextStorage.h; path = Control/DesignMode/Tool/ZXTextStorage.h; sourceTree = "<group>"; };
 		35D7F6D11ECC7FA300CB29B1 /* ZXTextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZXTextStorage.m; path = Control/DesignMode/Tool/ZXTextStorage.m; sourceTree = "<group>"; };
+		35F43F4B1ECD8635005D757E /* decoratorMode.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = decoratorMode.txt; sourceTree = "<group>"; };
 		481A003E61DC829518BC749B /* Pods-Control.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Control.release.xcconfig"; path = "Pods/Target Support Files/Pods-Control/Pods-Control.release.xcconfig"; sourceTree = "<group>"; };
 		706B401B0722D0896B86AE11 /* Pods-Control.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Control.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Control/Pods-Control.debug.xcconfig"; sourceTree = "<group>"; };
 		F24C81DA6C03876BB79E5CEC /* libPods-Control.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Control.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -304,6 +306,7 @@
 				35A8B8BD1E90D583009BBFC5 /* ZXMacro.h */,
 				35D7F6CB1ECC691600CB29B1 /* PrefixHeader.pch */,
 				350DB83A1ECC8E3400B21B4A /* flyweights.txt */,
+				35F43F4B1ECD8635005D757E /* decoratorMode.txt */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -520,6 +523,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				35C797951E2A389000F69E33 /* LaunchScreen.storyboard in Resources */,
+				35F43F4C1ECD8635005D757E /* decoratorMode.txt in Resources */,
 				35C797921E2A389000F69E33 /* Assets.xcassets in Resources */,
 				351500931E5010F300FD4BAB /* 许巍 - 温暖.mp3 in Resources */,
 				35C797901E2A389000F69E33 /* Main.storyboard in Resources */,

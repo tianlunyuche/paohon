@@ -11,8 +11,11 @@
 #import "TableDecorator.h"
 #import "ChairDecorator.h"
 #import "CommercialHouse.h"
+#import "ContentVIew.h"
 
 @interface ZXDecorativeVC ()
+
+@property(nonatomic,strong)ContentVIew *contentView;
 
 @end
 
@@ -21,15 +24,35 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
    
+    [self creatText];
+    [self dealData];
+}
+
+- (ContentVIew *)contentView{
+    
+    
+    CGRect textViewRect =CGRectInset(self.view.bounds, 10.0, 20.0);
+    if (!_contentView) {
+        _contentView =[[ContentVIew alloc] initWithFrame:textViewRect];
+        ZXLog(@"fdwwe");
+    }
+    return _contentView;
+}
+
+- (void)creatText{
+    
+    [self.view addSubview:self.contentView];
+    [self.contentView concreteContentwithFileName:@"decoratorMode" ofType:@"txt"];
+}
+
+- (void)dealData{
     
     House  *house=[[CommercialHouse alloc]init];
-#warning
+    
     house=[[TableDecorator alloc]initWithHouse:house].house;
     house=[[ChairDecorator alloc]initWithHouse:house].house;
     ZXLog(@"房子价格:%f", [house totalMoney]);
     ZXLog(@"房子详情:%@",[house detialInfo]);
-    ZXLog(@"博客园-FlyElephant");
-    ZXLog(@"http://www.cnblogs.com/xiaofeixiang/");
 }
 
 - (void)didReceiveMemoryWarning {

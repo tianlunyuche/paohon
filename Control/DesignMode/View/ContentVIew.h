@@ -23,4 +23,7 @@
 
 @property(nonatomic,strong)UITextView *contentView;
 
+//内容
+- (void)concreteContentwithFileName:(NSString *)name ofType:(NSString *)type;
+
 @end

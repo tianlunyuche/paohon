@@ -45,6 +45,7 @@ typedef id<WebSiteProtocol> WebsiteType;
 - (void)creatText{
     
     [self.view addSubview:self.contentView];
+    [self.contentView concreteContentwithFileName:@"flyweights" ofType:@"txt"];
 }
 
 - (void)dealData{

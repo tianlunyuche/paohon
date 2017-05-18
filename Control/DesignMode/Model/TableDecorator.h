@@ -11,6 +11,5 @@
 //装饰对象TableDecorator：
 @interface TableDecorator : HouseDecorator
 
-@property(nonatomic,strong)House *house;
 
 @end
