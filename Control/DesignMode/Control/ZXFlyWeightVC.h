@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-
+//享元模式
 @interface ZXFlyWeightVC : UIViewController
 
 

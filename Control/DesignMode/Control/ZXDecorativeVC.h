@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+//装饰者模式
 @interface ZXDecorativeVC : UIViewController
 
 @end

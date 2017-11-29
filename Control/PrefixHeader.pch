@@ -10,7 +10,8 @@
 #define PrefixHeader_pch
 
 #include "ZXMacro.h"
-
+#include "ZXtoast.h"
+#import "NSData+MD5.h"
 
 //打印调试
 #ifdef DEBUG

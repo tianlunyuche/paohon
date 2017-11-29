@@ -12,9 +12,14 @@
 
 @interface ZXDesignModeTableVC ()
 
+@property(nonatomic,strong)NSMutableArray *titleArrays;
 @end
 
 @implementation ZXDesignModeTableVC
+
+- (instancetype)initWithStyle:(UITableViewStyle)style {
+    return [super initWithStyle:UITableViewStyleGrouped];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -24,7 +29,56 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
+    self.tableView.allowsMultipleSelectionDuringEditing =YES;
+    [self createSubView];
 }
+
+- (NSMutableArray *)titleArrays{
+    if (!_titleArrays) {
+         _titleArrays =[[self tableTitles] mutableCopy];
+    }
+    return _titleArrays;
+}
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated{
+
+    if (self.tableView.isEditing) {
+        ZXLog(@"end Editing");
+        [self.tableView beginUpdates];
+        NSArray *selectRows =[self.tableView indexPathsForSelectedRows];
+        NSMutableIndexSet *indexpaths =[[NSMutableIndexSet alloc] init];
+        NSMutableIndexSet *sec =[[NSMutableIndexSet alloc] init];
+        for (NSIndexPath *path in selectRows) {
+//            [indexpaths addIndex:path.row];
+//            [sec addIndex:path.section];
+            [self.titleArrays[path.section] removeObjectAtIndex:path.row];
+        }
+
+//        NSIndexSet *sec3 =[sec copy];
+//        NSIndexSet *indexSet =[indexpaths copy];
+//        [sec3 enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
+//            ZXLog(@"self.titleArrays[idx] =%@",self.titleArrays[idx]);
+//   
+//        }];
+        ZXLog(@"sec =%@",sec);
+//        ZXLog(@"indexpaths =%lu sec =%lu",indexpaths.count,(unsigned long)sec.count);
+////        ZXLog(@"indexpaths =%@",indexpaths);
+
+
+        [self.tableView deleteRowsAtIndexPaths:selectRows withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView endUpdates];
+        [self.tableView setEditing:NO animated:YES];
+    }else{
+        ZXLog(@"begin Editing");
+        [self.tableView setEditing:YES animated:YES];
+    }
+}
+
+- (void)createSubView{
+    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -34,17 +88,19 @@
 #pragma mark - UITableViewDelegate
 //选中单元格要调用此协议函数
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if ((indexPath.section == 0 )&& (indexPath.row == 0)) {
-        
-        [self.navigationController pushViewController:[[ZXFlyWeightVC alloc] init] animated:YES];
+    if (!tableView.isEditing) {
+        if ((indexPath.section == 0 )&& (indexPath.row == 0)) {
+            
+            [self.navigationController pushViewController:[[ZXFlyWeightVC alloc] init] animated:YES];
+        }
+        if ((indexPath.section == 0 )&& (indexPath.row == 1)) {
+            
+            [self.navigationController pushViewController:[[ZXDecorativeVC alloc] init] animated:YES];
+            
+        }
     }
-    if ((indexPath.section == 0 )&& (indexPath.row == 1)) {
-        
-        [self.navigationController pushViewController:[[ZXDecorativeVC alloc] init] animated:YES];
-        
-    }
+
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -57,7 +113,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UITableViewCell * cell = [[UITableViewCell alloc] init];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.accessoryType = UITableViewCellAccessoryDetailButton;
     
     return cell;
 }
@@ -66,18 +122,18 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
-    return [self tableTitles].count;
+    return self.titleArrays.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-    return [self tableTitles][section].count;
+    return [self.titleArrays[section] count];
 }
 
 #pragma mark - data
 - (NSArray <NSArray *> *)tableTitles {
-    return @[@[@"享元模式",
-               @"装饰着模式"]];
+    return @[@[@"享元模式"],
+               @[@"装饰着模式"]];
 };
 
 /*

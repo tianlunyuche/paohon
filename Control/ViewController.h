@@ -102,12 +102,11 @@
     UIBarButtonItem* _btnLoadData;
     UIBarButtonItem* _btnEdit;
   
-    //用于录音
-    AVAudioRecorder* recorder;
+
     //设置定时检测，用来监听当前音量大小，控制话筒图片
     NSTimer* timer;
     
-    NSURL* urlPlay;
+
     
 }
 

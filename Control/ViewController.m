@@ -27,28 +27,18 @@
 
 //#import <ReactiveCocoa/ReactiveCocoa.h>
 
-typedef void(^RunloopBlock) (void);
+
 //#import "MBProgressHUD.h"
 
 #define kscreen [UIScreen mainScreen].bounds.size
 
 @interface ViewController ()
-<AVAudioPlayerDelegate,UITableViewDelegate,UITableViewDataSource,AVAudioRecorderDelegate,UISearchBarDelegate,UISearchDisplayDelegate>
+<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,UISearchDisplayDelegate>
 //<UITextFieldDelegate ,UIAlertViewDelegate,UITabBarControllerDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 
 @property(strong,nonatomic)CMMotionManager *motionManager;
 
 @property(assign,nonatomic,getter=isFinish)BOOL finish;
-
-@property(nonatomic,strong)dispatch_source_t runloopTime;
-
-@property(nonatomic,strong)NSMutableArray *tasks;
-//最大任务数
-@property(nonatomic,assign)NSUInteger maxQueueLength;
-//通知 观察者
-@property (nonatomic, weak) id observe;
-
-@property (nonatomic, strong) MPMusicPlayerController *musicPlayer;
 
 @property (strong, nonatomic)CLGeocoder *geocoder;
 
@@ -130,35 +120,7 @@ typedef void(^RunloopBlock) (void);
 //    [self UIAlertViewCreat];
 //    [self PanGesture];
 //    [self threadCommunication];
-    [self btnp];
-}
-#pragma mark - 线程间通信
-- (void)threadCommunication{
-    
-    _imageView =[[UIImageView alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
-    [self.view addSubview:_imageView];
-    
-    [self performSelectorInBackground:@selector(downloadPic) withObject:nil];
-    ZXLog(@"current thread = %@",[NSThread currentThread]);
-}
 
-- (void)downloadPic{
-    
-    //将图片转成二进制数据，比较耗时操作
-    NSData *data =[NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://onm2lgj62.bkt.clouddn.com/2.jpg"]];
-    //
-    UIImage *img =[UIImage imageWithData:data];
-    
-    //回到主线程设置图片
-    [self performSelectorOnMainThread:@selector(senderImage:) withObject:img waitUntilDone:NO];
-    
-    ZXLog(@"current thread2 = %@",[NSThread currentThread]);
-}
-
--(void)senderImage:(UIImage *)image
-{
-    _imageView.image = image;
-    ZXLog(@"current thread3 = %@",[NSThread currentThread]);
 }
 #pragma mark - 图像处理
 
@@ -213,8 +175,7 @@ typedef void(^RunloopBlock) (void);
     }
     
     if (sender.direction == UISwipeGestureRecognizerDirectionRight) {
-        
-
+    
 //         transition.subtype = kCATransitionFromLeft;
 //        [_imageView.layer addAnimation:transition forKey:nil];
 ////        [_imageView setFrame:CGRectMake(_imageView.frame.origin.x+50, _imageView.frame.origin.y, _imageView.frame.size.width, _imageView.frame.size.height)];
@@ -231,168 +192,6 @@ typedef void(^RunloopBlock) (void);
     
     NSLog(@"%ld",sender.direction);
 
-}
-
-
-
-#pragma mark - 通知中心
-- (void)NSNotificationCenterCreat{
-    
-    UIButton *send =[UIButton buttonWithType:UIButtonTypeRoundedRect];
-    send.backgroundColor=[UIColor redColor];
-    send.frame=CGRectMake(50, 50, 60, 40);
-    [send addTarget:self action:@selector(sendNotificate) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:send];
-    
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addNotification) name:@"tongzhi" object:nil];
-    //第二种方法
-    //Name: 通知的名称
-    //object:谁发出的通知
-    //queue: 队列,决定 block 在哪个线程中执行, nil  在发布通知的线程中执行
-    //usingBlock: 只要监听到通知,就会执行这个 block
-    //这个通知返回一个 id 这个通知同样需要移除
-    _observe = [[NSNotificationCenter defaultCenter] addObserverForName:@"tongzhi" object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
-        
-        NSLog(@"收到了通知%@",[NSThread currentThread]);
-    }];
-}
-
-- (void)sendNotificate{
-
-    //发送一个通知
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"tongzhi" object:nil];
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"tongzhi" object:nil userInfo:nil];
-    //发送通知 ,异步发送通知, 主线程监听通知
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        NSLog(@"sendNotificate =%@",[NSThread currentThread]);
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"tongzhi" object:nil];
-    });
-}
-
-- (void)addNotification{
-    NSLog(@"addNotification =%@",[NSThread currentThread]);
-    NSLog(@"当调用了发送通知方法后，会执行当前方法");
-}
-
-- (void)dealloc{
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-#pragma mark - RunLoop 运行循环 ,2个模式 各包含了 Observer观察者，源source和 时钟timer
-/**
- 作用：1. 保证程序不退出！ 它是一个死循环！
-    2. 负责监事件， 触摸 ，时钟，网络事件，（系统事件，内核事件）
-    3. 如果没有事件，就进入睡眠
-    4. 在一次循环中，需要绘制 所有屏幕上的点！
- 
-    Runloop 模式：
-    1， NSDefaultRunLoopMode默认模式
-    2， UITrackingRunLoopMode用户交互模式（只要有用户交互事件 ！！Runloop就会切换到这个模式）
-    3， NSRunLoopCommonModes占位模式（占有了上面 两种模式）
- 
- 
-    线程：
-        1，每一条线程 上面都有一个 runloop 
-        2，主线程 不会挂掉的原因 是。主线程的 Runloop 正在跑 run
-        3，子线程 ，上面的 Runloop默认不启动 ！所以子线程 执行完后 就会挂掉
- 
-    性能优化： 耗时操作放 子线程 ， 更新UI 放主线程 ， UI数据分布加载
-    
-    //
-        不可逆运算， 数据
- */
-- (void)runloopCreat{
-    //创建一个队列
-    dispatch_queue_t queue =dispatch_get_global_queue(0, 0);
-    self.runloopTime =dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
-    //GCD的时间参数
-    dispatch_time_t start =DISPATCH_TIME_NOW;
-    //每一秒就 打印一次
-    dispatch_time_t interval =1* NSEC_PER_SEC;
-    
-    dispatch_source_set_timer(self.runloopTime, start, interval, 0);
-   
-    //设置定时器回调
-    dispatch_source_set_event_handler(self.runloopTime, ^{
-        NSLog(@"---------------%@",[NSThread currentThread]);
-    });
-    //启动定时器
-    dispatch_resume(self.runloopTime);
-
- 
-    
-//    NSThread  * thread  = [[NSThread  alloc ]  initWithBlock:^ {
-//        NSTimer *timer =[NSTimer timerWithTimeInterval:1.0 target:self selector:@selector(timerMethod) userInfo:nil repeats:YES];
-//        [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
-//        
-//        //让子线程的Runloop
-//    }]
-}
-
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-//       dispatch_cancel(self.runloopTime);
-}
-
-- (void)addRunloop{
-    
-    [self addRunloopObserver];
-    
-//    _timer =[NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(timerMethod) userInfo:nil repeats:YES];
-    _maxQueueLength =20;
-    _tasks =[NSMutableArray array];
-}
-
-- (void)addTasks:(RunloopBlock)task{
-    //保存新的任务
-    [self.tasks addObject:task];
-    //干掉之前任务
-    if(self.tasks.count >self.maxQueueLength){
-        [self.tasks removeObjectAtIndex:0];
-    }
-}
-
-
-//回调
-static void Callback(CFRunLoopObserverRef observer, CFRunLoopActivity activity,void *info){
-    NSLog(@"此处 执行 你想要的操作");
-    //1, 拿到控制器对象
-//    ViewController *vc=(__bridge ViewController *)info;
-//    if (vc.tasks.count ==0) {
-//        return;
-//    }
-//    //2, 从数组里面取出任务
-//    RunloopBlock task =vc.tasks.firstObject;
-//    //3, 执行
-//    task();
-//    //4, 干掉已经执行完毕的任务
-//    [vc.tasks removeObjectAtIndex:0];
-}
-
-- (void)addRunloopObserver{
-    
-    //1,获取当前Runloop
-    CFRunLoopRef runloop =CFRunLoopGetCurrent();
-    //2, 创建观察者  ，定义上下文
-    CFRunLoopObserverContext context ={
-
-        0,
-        (__bridge void *)(self),
-        &CFRetain,
-        &CFRelease,
-        NULL
-    };
-    
-    //2.1 定义观察者
-    static CFRunLoopObserverRef defaultModeObserver;
-    //2.2 创建观察者
-    defaultModeObserver =CFRunLoopObserverCreate(NULL, kCFRunLoopBeforeWaiting, YES, 0, &Callback, &context);
-    
-    //3. 给当前 Runloop添加观察者
-    CFRunLoopAddObserver(runloop, defaultModeObserver, kCFRunLoopCommonModes);
-    //释放，防止内存泄漏
-    CFRelease(defaultModeObserver);
-    
 }
 
 #pragma mark - 打开加速计和 陀螺仪
@@ -792,130 +591,6 @@ bool isSearch;
     NSLog(@"indexS =%@",indexS);
 }
 
-#pragma mark - 录音
-//录音设置
-- (void)audio{
-    //先配置 Recorder
-    NSMutableDictionary* recordSetting =[NSMutableDictionary dictionary];
-    //设置录音格式
-    [recordSetting setValue:[NSNumber numberWithInt:kAudioFormatMPEG4AAC] forKey:AVFormatIDKey];
-    //设置录音采样率
-    [recordSetting setValue:[NSNumber numberWithFloat:44100] forKey:AVSampleRateKey];
-    //录音的通道数
-    [recordSetting setValue:[NSNumber numberWithInt:1] forKey:AVNumberOfChannelsKey];
-    //采样位数8 ，16 ，24 ，32
-    [recordSetting setValue:[NSNumber numberWithInt:16] forKey:AVLinearPCMBitDepthKey];
-    //录音质量
-    [recordSetting setValue:[NSNumber numberWithInt:AVAudioQualityHigh] forKey:AVEncoderAudioQualityKey];
-    //
-    NSString* strUrl =[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    urlPlay =[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/record.aac",strUrl]];
-    NSError* error;
-    //创建一个带有保存录音路径的 录音器
-    recorder =[[AVAudioRecorder alloc] initWithURL:urlPlay settings:recordSetting error:&error];
-    
-    //开启音量检测
-    recorder.meteringEnabled =YES;
-    recorder.delegate =self;
-    
-    //一，进行录音设置
-    self.imageView =[[UIImageView alloc] initWithFrame:CGRectMake((self.view.frame.size.width -100) /2, 100, 100, 100)];
-    
-    [self.view addSubview:self.imageView];
-    
-    //控制我们的录音功能
-    self.btn =[UIButton buttonWithType:UIButtonTypeCustom];
-    self.btn.frame =CGRectMake(self.imageView.frame.origin.x, 250, 50, 40);
-    [self.btn setTitle:@"start " forState:UIControlStateNormal];
-    [self.btn setBackgroundColor:[UIColor blackColor]];
-    
-    //按钮被按下
-//    [self.btn addTarget:self action:@selector(btnDown:) forControlEvents:UIControlEventTouchDown];
-    //手指抬起时
-//    [self.btn addTarget:self action:@selector(btnUp:) forControlEvents:UIControlEventTouchUpInside];
-    [self.btn addTarget:self action:@selector(btnp) forControlEvents:UIControlEventTouchUpInside];
-
-    //当触摸拖动离开控制范围时
-//    [self.btn addTarget:self action:@selector(btnDrapUp:) forControlEvents:UIControlEventTouchDragExit];
-    [self.view addSubview:self.btn];
-
-}
-
-- (void)btnp{
-    
-    [self.navigationController pushViewController:[[TableViewController alloc] init] animated:YES];
-}
-
-- (void)btnDown:(UIButton *)sender{
-    
-    [sender setTitle:@"stop " forState:UIControlStateNormal];
-    //创建录音文件，准备录音
-    if ([recorder prepareToRecord]){
-        //开始
-        [recorder record];
-    }
-    //设置定时检测
-    timer =[NSTimer scheduledTimerWithTimeInterval:0 target:self  selector:@selector(detectionVoice) userInfo:nil repeats:YES];
-
-}
-//检测当前声音
-- (void)detectionVoice{
-    
-    [recorder updateMeters]; //刷新当前音量数据
-    double lowPassResults =pow(10 ,(0.05* [recorder peakPowerForChannel:0]));
-    //取值范围现在是0～1
-    if(0 <lowPassResults <=0.06){
-        [self.imageView setImage:[UIImage imageNamed:@"1"]];
-    }else
-        if(0.06 <lowPassResults <=0.13){
-        [self.imageView setImage:[UIImage imageNamed:@"2"]];
-    }else
-        if(0.13 <lowPassResults <=0.20){
-            [self.imageView setImage:[UIImage imageNamed:@"3"]];
-        }else
-            if(0.20 <lowPassResults <=0.27){
-                [self.imageView setImage:[UIImage imageNamed:@"4"]];
-            }else
-                if(0.27 <lowPassResults <=0.34){
-                    [self.imageView setImage:[UIImage imageNamed:@"5"]];
-                }else
-                    if(0.34 <lowPassResults <=0.41){
-                        [self.imageView setImage:[UIImage imageNamed:@"6"]];
-                    }else
-                        if(0.41 <lowPassResults <=0.48){
-                            [self.imageView setImage:[UIImage imageNamed:@"7"]];
-                        }else
-                            {
-                                [self.imageView setImage:[UIImage imageNamed:@"9"]];
-                            }
-    
-}
-
-- (void)btnUp:(UIButton *)sender{
-    
-    [sender setTitle:@"start" forState:UIControlStateNormal];
-    double cTime =recorder.currentTime;
-    if (cTime >2){
-        NSLog(@"放出去");
-    }else{
-        //删除记录文件
-        [recorder deleteRecording];
-    }
-    [recorder stop];
-    [timer invalidate];
-}
-
-
-- (void)btnDrapUp:(UIButton *)sender{
-    
-    [sender setTitle:@"start" forState:UIControlStateNormal];
-    //删除录制文件
-    [recorder deleteRecording];
-    [recorder stop];
-    [timer invalidate];
-    NSLog(@"取消发送");
-}
-
 
 #pragma mark - 跑步内容
 /**
@@ -1089,71 +764,7 @@ bool isSearch;
     return 80;
 }
 **/
-#pragma mark - 音频播放器
-- (void)creatMusic{
-    NSLog(@"音频播放");
-//    MPMusicPlayerController *MusicVC =[[MPMusicPlayerController alloc] init];
-    self.musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
-}
 
-#pragma mark - 视频播放器
-- (void)creatVieo{
-    
-    //创建一个字符串，保存视频的网络地址
-    NSString* strURl =@"http://xinhabavtest.oss-cn-qingdao.aliyuncs.com/VID_20170328_192544.mp4";
-    NSURL* url =[NSURL URLWithString:strURl];
-    
-    //创建一个视图播放器对象
-    _playController =[[MPMoviePlayerController alloc] initWithContentURL:url];
-    //视图大小赋值
-    _playController.view.frame =CGRectMake(0, 50, 400, 300);
-    //视频下载后 的处理编解码的过程
-    [_playController prepareToPlay];
-    //将播放器添加到 当前视图上
-    [self.view addSubview:_playController.view];
-    NSLog(@"hello");
-    //创建另一个视图播放控制器 ，这一个可以横屏 和竖屏 切换
-//    _playerView =[[MPMoviePlayerViewController alloc] initWithContentURL:url];
-//    _playerView.view.frame =self.view.bounds;
-//    [self.view addSubview:_playerView.view];
- 
-    //选择界面
-    MPMediaPickerController *mediaPicker =[[MPMediaPickerController alloc] init];
-    mediaPicker.delegate =self;
-    [self presentViewController:mediaPicker animated:YES completion:^{
-        NSLog(@"成功弹出");
-    }];
-    
-    
-//    mediaPicker.view.frame =CGRectMake(0, 400, kscreen.width, 200);
-//    [self.view addSubview:mediaPicker.view];
-}
-
-- (void)mediaPicker:(MPMediaPickerController *)mediaPicker didPickMediaItems:(MPMediaItemCollection *)mediaItemCollection{
-    
-    [self.musicPlayer setQueueWithItemCollection:mediaItemCollection];
-    NSLog(@"didPickMediaItems");
-    //列出选择歌曲清单
-    NSMutableString *strTitle =[[NSMutableString alloc] initWithString:@""];
-    for (MPMediaItem *item in [mediaItemCollection items]) {
-        
-        [strTitle appendString:[item valueForProperty:MPMediaItemPropertyTitle]];
-        [strTitle appendString:@"\n"];
-    }
-    [self dismissViewControllerAnimated:YES completion:^{
-        NSLog(@"选中");
-    }];
-    
-    NSLog(@"didPickMediaItems");
-}
-
-- (void)mediaPickerDidCancel:(MPMediaPickerController *)mediaPicker{
-    
-    NSLog(@"cancel");
-    [self dismissViewControllerAnimated:YES completion:^{
-        NSLog(@"返回主页面");
-    }];
-}
 
 #pragma mark - 系统提示音
 - (void)playNotifySound{
@@ -1248,163 +859,6 @@ bool isSearch;
           NSLog(@" Opt2 !");
     }
 }
-
-
-#pragma mark - setAnimation动画效果
-
-
-- (void)setAnimation{
-    
-    _imgv =[[UIImageView alloc] init];
-    _imgv.frame =CGRectMake(100, 100, 80, 80);
-    _imgv.image =[UIImage imageNamed:@"1.png"];
-    [self.view addSubview:_imgv];
-    //设置移动按钮
-    UIButton* btnMove =[UIButton buttonWithType:UIButtonTypeRoundedRect];
-    btnMove.frame =CGRectMake(120, 360, 80, 40);
-    [btnMove setTitle:@"移动" forState:UIControlStateNormal];
-    
-     //添加触发事件
-    [btnMove addTarget:self action:@selector(preMove) forControlEvents:UIControlEventTouchUpInside];
-    //添加视图
-    [self.view addSubview:btnMove];
-    //设置圆角按钮
-    UIButton* btnScale =[UIButton buttonWithType:UIButtonTypeRoundedRect];
-    btnScale.frame =CGRectMake(120, 400, 80, 40);
-    [btnScale setTitle:@"缩放" forState:UIControlStateNormal];
-    //添加触发事件
-    [btnScale addTarget:self action:@selector(preScale) forControlEvents:UIControlEventTouchUpInside];
-    //添加视图
-    [self.view addSubview:btnScale];
-}
-
-- (void)preMove{
-    
-    //开始动画函数 ，准备动画的开始工作
-    [UIView beginAnimations:nil context:nil];
-    
-  
-    [UIView setAnimationDuration:2];
-    //动画开始的 延时 长度，秒
-    [UIView setAnimationDelay:0];
-    //动画的 代理对象
-    [UIView setAnimationDelegate:self];
-    
-    //动画运动轨迹的方式 ,   UIViewAnimationCurveEaseInOut,  UIViewAnimationCurveEaseIn,//越来越快
-//    UIViewAnimationCurveEaseOut, 越来越慢
-//    UIViewAnimationCurveLinear
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
-    //设置动画结果调用的函数
-    [UIView setAnimationDidStopSelector:@selector(stopAmin)];
-      //----动画的实际 目标结果
-    //目标位置
-    _imgv.frame =CGRectMake(300, 300, 160, 120);
-    _imgv.alpha =0.3;
-    //提交运行动画
-    [UIView commitAnimations];
-}
-
-- (void)stopAmin{
-    NSLog(@"动画结束了");
-}
-
-- (void)preScale{
-    
-}
-
-#pragma mark - NSThread 线程 ，NSLock 线程锁 确保了加法操作的安全性
-- (void)NSThreadCreat{
-    //当按钮 较多时，可以用 tag 来分别标识 ，不同按钮可以 触发不同的 事件
-    for (int i =0;i<3 ;i++){
-        UIButton* btn =[UIButton buttonWithType:UIButtonTypeRoundedRect];
-        btn.frame =CGRectMake(100, 100+80*i, 80, 40);
-        
-        [btn addTarget:self action:@selector(pressBtn:) forControlEvents:UIControlEventTouchUpInside];
-        
-        btn.tag =101 +i;
-        if (i ==0){
-            [btn setTitle:@"启动线程1" forState:UIControlStateNormal];
-        }
-        else if (i ==1){
-            [btn setTitle:@"启动线程2" forState:UIControlStateNormal];
-        }
-        else if (i ==2){
-            [btn setTitle:@"启动线程3" forState:UIControlStateNormal];
-        }
-        [self.view addSubview:btn];
-    }
-}
-
-- (void)pressBtn:(UIButton *)btn{
-    
-    if (btn.tag ==101){
-        NSLog(@"按钮1 按下了");
-        
-        //创建线程 对象
-        NSThread* newT =[[NSThread alloc] initWithTarget:self selector:@selector(actNew:) object:nil];
-        //开启运行线程
-        [newT start];
-    }
-    else if(btn.tag ==102){
-        NSLog(@"按钮2 按下了");
-        //创建并且启动线程
-        [NSThread detachNewThreadSelector:@selector(actT:) toTarget:self withObject:nil];
-    }
-    else if(btn.tag ==103){
-        NSLog(@"按钮3 按下了");
-        
-        //创建线程 对象
-        NSThread* newT3 =[[NSThread alloc] initWithTarget:self selector:@selector(actT3:) object:nil];
-        //开启运行线程
-        [newT3 start];
-    }
-    _lock =[[NSLock alloc] init];
-}
-
-- (void)actT3:(NSThread *) thread{
-    int i = 0;
-    while (true) {
-        i++;
-        if (i >10000) {
-            break ;
-        }
-        //线程锁 确保了加法操作的安全性
-        [_lock lock];
-        _counter++;
-        [_lock unlock];
-        NSLog(@"c3 =%ld" ,_counter);
-    }
-    NSLog(@"c3 final = %ld",_counter);
-}
-
-
-
-- (void)actT:(NSThread *) thread{
-    int i = 0;
-    while (true) {
-        i++;
-        if (i >10000) {
-            break ;
-        }
-        _counter++;
-        NSLog(@"c2 =%ld" ,_counter);
-    }
-    NSLog(@"c2 final = %ld",_counter);
-}
-
-- (void)actNew:(NSThread *) thread{
-    int i = 0;
-    while (true) {
-        i++;
-        if (i >10000) {
-            break ;
-        }
-        _counter++;
-        NSLog(@"c1 =%ld" ,_counter);
-    }
-    NSLog(@"c1 final = %ld",_counter);
-}
-
 #pragma mark -  UIPickerView 选择视图创建 ，实现地区地址，生日，日历选择等功能
 
 - (void)UIPickerViewCreat{
