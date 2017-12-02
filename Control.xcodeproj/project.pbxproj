@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0AAB5CE5A462CE6DCE3B80F1 /* libPods-Control.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F24C81DA6C03876BB79E5CEC /* libPods-Control.a */; };
+		350067701FD2A79200D22086 /* libFMDB.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 350067711FD2A79200D22086 /* libFMDB.a */; };
+		350067721FD2A7B800D22086 /* libReactiveObjC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 350067731FD2A7B800D22086 /* libReactiveObjC.a */; };
+		350067741FD2A7BB00D22086 /* libMJRefresh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 350067751FD2A7BB00D22086 /* libMJRefresh.a */; };
 		3503DC601EB75FAC008AD79E /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3503DC5F1EB75FAC008AD79E /* Social.framework */; };
 		350786DC1ECC0AE60040E238 /* ZXQRcodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 350786DB1ECC0AE60040E238 /* ZXQRcodeVC.m */; };
 		350786DF1ECC0C930040E238 /* ZXCreatMyMapVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 350786DE1ECC0C930040E238 /* ZXCreatMyMapVC.m */; };
@@ -34,7 +36,8 @@
 		3516C1191E2B313A00847A45 /* SecondVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3516C1181E2B313A00847A45 /* SecondVC.m */; };
 		3516C11C1E2B314900847A45 /* ThirdVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3516C11B1E2B314900847A45 /* ThirdVC.m */; };
 		352D1A901E84378500659DBF /* UIImage+ZXQRcode.m in Sources */ = {isa = PBXBuildFile; fileRef = 352D1A8F1E84378500659DBF /* UIImage+ZXQRcode.m */; };
-		35522E451FCEAFDF0066B916 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35522E461FCEAFDF0066B916 /* libReact.a */; settings = {ATTRIBUTES = (Required, ); }; };
+		355261741FD2A3340061EDAD /* libPods-Control.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 355261751FD2A3340061EDAD /* libPods-Control.a */; };
+		355261761FD2A33F0061EDAD /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 35C283461ED349AA00672B86 /* libsqlite3.0.tbd */; };
 		356D75AB1E8FA42D0014F6F7 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 356D75AA1E8FA42D0014F6F7 /* AddressBook.framework */; };
 		356D75AD1E8FA4320014F6F7 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 356D75AC1E8FA4320014F6F7 /* AddressBookUI.framework */; };
 		356D75B01E8FAA830014F6F7 /* LoopQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 356D75AF1E8FAA830014F6F7 /* LoopQueue.m */; };
@@ -51,8 +54,6 @@
 		35BE79651E7B8BF900181216 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35BE79641E7B8BF900181216 /* CoreMotion.framework */; };
 		35C2833F1ED3491B00672B86 /* ZXfmdbVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C2833E1ED3491B00672B86 /* ZXfmdbVC.m */; };
 		35C283421ED3494D00672B86 /* ZXUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C283411ED3494D00672B86 /* ZXUserModel.m */; };
-		35C283451ED3497B00672B86 /* ZXfmdbTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C283441ED3497B00672B86 /* ZXfmdbTool.m */; };
-		35C283471ED349AA00672B86 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 35C283461ED349AA00672B86 /* libsqlite3.0.tbd */; };
 		35C2834B1ED34F8900672B86 /* ZXfdbView.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C2834A1ED34F8900672B86 /* ZXfdbView.m */; };
 		35C467731FBC186800475DED /* Data2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 35C467721FBC186800475DED /* Data2.plist */; };
 		35C467771FBC195200475DED /* NSData+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C467761FBC195200475DED /* NSData+MD5.m */; };
@@ -89,6 +90,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		350067711FD2A79200D22086 /* libFMDB.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libFMDB.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		350067731FD2A7B800D22086 /* libReactiveObjC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReactiveObjC.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		350067751FD2A7BB00D22086 /* libMJRefresh.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libMJRefresh.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3503DC5F1EB75FAC008AD79E /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		350786DA1ECC0AE60040E238 /* ZXQRcodeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXQRcodeVC.h; sourceTree = "<group>"; };
 		350786DB1ECC0AE60040E238 /* ZXQRcodeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXQRcodeVC.m; sourceTree = "<group>"; };
@@ -141,6 +145,8 @@
 		352D1A8F1E84378500659DBF /* UIImage+ZXQRcode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ZXQRcode.m"; sourceTree = "<group>"; };
 		35522E441FCEAFD40066B916 /* libReactiveObjC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReactiveObjC.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		35522E461FCEAFDF0066B916 /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		355261751FD2A3340061EDAD /* libPods-Control.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libPods-Control.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		355261781FD2A3800061EDAD /* libFMDB.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libFMDB.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		356D75AA1E8FA42D0014F6F7 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		356D75AC1E8FA4320014F6F7 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		356D75AE1E8FAA830014F6F7 /* LoopQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoopQueue.h; path = Control/LoopQueue.h; sourceTree = "<group>"; };
@@ -168,8 +174,6 @@
 		35C2833E1ED3491B00672B86 /* ZXfmdbVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZXfmdbVC.m; path = ZXFMDB/Control/ZXfmdbVC.m; sourceTree = "<group>"; };
 		35C283401ED3494C00672B86 /* ZXUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZXUserModel.h; path = ZXFMDB/Model/ZXUserModel.h; sourceTree = "<group>"; };
 		35C283411ED3494D00672B86 /* ZXUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZXUserModel.m; path = ZXFMDB/Model/ZXUserModel.m; sourceTree = "<group>"; };
-		35C283431ED3497B00672B86 /* ZXfmdbTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZXfmdbTool.h; path = ZXFMDB/Control/ZXfmdbTool.h; sourceTree = "<group>"; };
-		35C283441ED3497B00672B86 /* ZXfmdbTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZXfmdbTool.m; path = ZXFMDB/Control/ZXfmdbTool.m; sourceTree = "<group>"; };
 		35C283461ED349AA00672B86 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		35C283491ED34F8900672B86 /* ZXfdbView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZXfdbView.h; path = ZXFMDB/View/ZXfdbView.h; sourceTree = "<group>"; };
 		35C2834A1ED34F8900672B86 /* ZXfdbView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZXfdbView.m; path = ZXFMDB/View/ZXfdbView.m; sourceTree = "<group>"; };
@@ -233,15 +237,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				35522E451FCEAFDF0066B916 /* libReact.a in Frameworks */,
-				35C283471ED349AA00672B86 /* libsqlite3.0.tbd in Frameworks */,
+				350067741FD2A7BB00D22086 /* libMJRefresh.a in Frameworks */,
+				350067721FD2A7B800D22086 /* libReactiveObjC.a in Frameworks */,
+				350067701FD2A79200D22086 /* libFMDB.a in Frameworks */,
+				355261761FD2A33F0061EDAD /* libsqlite3.0.tbd in Frameworks */,
+				355261741FD2A3340061EDAD /* libPods-Control.a in Frameworks */,
 				3503DC601EB75FAC008AD79E /* Social.framework in Frameworks */,
 				35A8B8BA1E90C123009BBFC5 /* CoreLocation.framework in Frameworks */,
 				356D75AD1E8FA4320014F6F7 /* AddressBookUI.framework in Frameworks */,
 				356D75AB1E8FA42D0014F6F7 /* AddressBook.framework in Frameworks */,
 				35BE79651E7B8BF900181216 /* CoreMotion.framework in Frameworks */,
 				35A8B8BC1E90D471009BBFC5 /* MapKit.framework in Frameworks */,
-				0AAB5CE5A462CE6DCE3B80F1 /* libPods-Control.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,6 +257,11 @@
 		0CE5716C63401BAE67F4C98A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				350067751FD2A7BB00D22086 /* libMJRefresh.a */,
+				350067731FD2A7B800D22086 /* libReactiveObjC.a */,
+				350067711FD2A79200D22086 /* libFMDB.a */,
+				355261781FD2A3800061EDAD /* libFMDB.a */,
+				355261751FD2A3340061EDAD /* libPods-Control.a */,
 				35522E461FCEAFDF0066B916 /* libReact.a */,
 				35522E441FCEAFD40066B916 /* libReactiveObjC.a */,
 				35C283461ED349AA00672B86 /* libsqlite3.0.tbd */,
@@ -340,8 +351,6 @@
 			children = (
 				35C283401ED3494C00672B86 /* ZXUserModel.h */,
 				35C283411ED3494D00672B86 /* ZXUserModel.m */,
-				35C283431ED3497B00672B86 /* ZXfmdbTool.h */,
-				35C283441ED3497B00672B86 /* ZXfmdbTool.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -765,7 +774,6 @@
 				35C467771FBC195200475DED /* NSData+MD5.m in Sources */,
 				35D7F6D21ECC7FA300CB29B1 /* ZXTextStorage.m in Sources */,
 				350DB8501ECCBCAA00B21B4A /* ZXDecorativeVC.m in Sources */,
-				35C283451ED3497B00672B86 /* ZXfmdbTool.m in Sources */,
 				35F43F581ECDA573005D757E /* ZXVedioVC.m in Sources */,
 				35F43F521ECD8CDA005D757E /* ZXtoast.m in Sources */,
 				35A651081F1BB79B00300753 /* ZXplistVC.m in Sources */,
@@ -955,6 +963,11 @@
 				GCC_PREFIX_HEADER = $SRCROOT/Control/PrefixHeader.pch;
 				INFOPLIST_FILE = Control/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/MJRefresh\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/ReactiveObjC\"",
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.habav.Control;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -975,6 +988,11 @@
 				GCC_PREFIX_HEADER = $SRCROOT/Control/PrefixHeader.pch;
 				INFOPLIST_FILE = Control/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/MJRefresh\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/ReactiveObjC\"",
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.habav.Control;
 				PRODUCT_NAME = "$(TARGET_NAME)";
