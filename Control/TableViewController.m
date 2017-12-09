@@ -20,6 +20,8 @@
 #import "ZXDesignModeTableVC.h"
 #import "ZXfmdbVC.h"
 #import "ZXplistVC.h"
+#import "ZXHookUtil.h"
+
 //#import <React/RCTRootView.h>
 
 @interface TableViewController ()
@@ -28,7 +30,11 @@
 @end
 
 @implementation TableViewController
-
+    
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+}
+    
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title =@"基础小示例";
@@ -71,8 +77,21 @@
 //    UIViewController *vc = [[UIViewController alloc] init];
 //    vc.view = rootView;
 //    [self presentViewController:vc animated:YES completion:nil];
+    UIButton *btn=[UIButton buttonWithType:UIButtonTypeRoundedRect];
+    btn.frame =CGRectMake(kScreenWidth -80, 0, 50, 50);
+    [btn addTarget:self action:@selector(shareBtnPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:btn];
 }
 
+    
+-(void)shareBtnPressed: (UIButton *)sender{
+    
+}
+
+-(void)onFavBtnPressed: (UIButton *)sender{
+    
+}
+        
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -82,7 +101,13 @@
 #pragma mark - UITableViewDelegate
 //选中单元格要调用此协议函数
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  
+    
+    Class cls =[self VCClasses][indexPath.section][indexPath.row];
+    if ([cls isEqual:[ZXQRcodeVC class]]) {
+        UIStoryboard * storyboard=[UIStoryboard storyboardWithName:@"ZXQRcodeVC" bundle:[NSBundle mainBundle]];
+        
+        [self.navigationController pushViewController:storyboard.instantiateInitialViewController animated:YES];
+    }else
     [self.navigationController pushViewController:[[[self VCClasses][indexPath.section][indexPath.row] alloc] init] animated:YES];
 }
 
@@ -214,7 +239,10 @@
     return  YES;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)tableView:(UITableView *)tableView
+commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
+ forRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     if (editingStyle ==UITableViewCellEditingStyleDelete) {
         if (self.tableView.isEditing) {
             [self.tableView beginUpdates];
@@ -314,7 +342,7 @@
                [ZXVedioVC class]],
              @[[ZXThreadVC class],
                [ZXRunLoopVC class]],
-             @[[ZXQRcodeVC class]],
+             @[[ZXQRcodeVC class] ,[ZXQRcodeVC class] ],
              @[[ZXDesignModeTableVC class],
                [ZXfmdbVC class],
                [ZXplistVC class]]];

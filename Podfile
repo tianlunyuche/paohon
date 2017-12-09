@@ -3,10 +3,10 @@
 target 'Control' do
 #
 #    pod 'ReactiveCocoa'
-#    pod 'ReactiveObjC'
-#    pod "MJRefresh"
-#    pod 'FMDB'
-
+    pod 'ReactiveObjC'
+    pod "MJRefresh"
+    pod 'FMDB'
+    pod 'Masonry'
 #    pod 'React'
 #    pod "React/RCTText"
 #    pod "React/RCTActionSheet"

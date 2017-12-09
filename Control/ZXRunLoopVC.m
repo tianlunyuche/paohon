@@ -248,7 +248,7 @@ static void Callback(CFRunLoopObserverRef observer, CFRunLoopActivity activity,v
 
 - (void)dealloc{
     
-    dispatch_cancel(self.runloopTime);
+//    dispatch_cancel(self.runloopTime);
     self.runloopTime =nil;
     _imgv =nil;
 }

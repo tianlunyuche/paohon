@@ -116,12 +116,17 @@ void ProviderReleaseData(void * info, const void * data, size_t size) {
  *
  * @abstract
  * 通过链接地址生成原生的二维码图（由于大小不好控制，需要加工）
+ * 技术： CIFilter CI滤镜类 + KVC
  */
 + (CIImage *)createQRFromAddress: (NSString *)networkAddress
 {
     NSData * stringData = [networkAddress dataUsingEncoding: NSUTF8StringEncoding];
     
-    CIFilter * qrFilter = [CIFilter filterWithName: @"CIQRCodeGenerator"];
+    CIFilter * qrFilter;
+    if (!qrFilter) {
+        qrFilter= [CIFilter filterWithName: @"CIQRCodeGenerator"];
+    }
+
     [qrFilter setValue: stringData forKey: @"inputMessage"];
     [qrFilter setValue: @"H" forKey: @"inputCorrectionLevel"];
     
@@ -132,7 +137,7 @@ void ProviderReleaseData(void * info, const void * data, size_t size) {
  * @function createNonInterpolatedImageFromCIImage: size:
  *
  * @abstract
- * 对生成的原始二维码进行加工，返回大小适合的黑白二维码图。因此还需要进行颜色填充
+ * 对生成的原始二维码进行渲染 加工，返回大小适合的黑白二维码图。因此还需要进行颜色填充
  */
 + (UIImage *)excludeFuzzyImageFromCIImage: (CIImage *)image size: (CGFloat)size
 {
@@ -144,9 +149,13 @@ void ProviderReleaseData(void * info, const void * data, size_t size) {
     //创建灰度色调空间
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceGray();
     CGContextRef bitmapRef = CGBitmapContextCreate(nil, width, height, 8, 0, colorSpace, (CGBitmapInfo)kCGImageAlphaNone);
-    CIContext * context = [CIContext contextWithOptions: nil];
-    CGImageRef bitmapImage = [context createCGImage: image fromRect: extent];
-    
+    //-----进行渲染 
+    CIContext * context;
+    if (!context) {
+        context= [CIContext contextWithOptions: nil];
+    }
+    CGImageRef bitmapImage= [context createCGImage: image fromRect: extent];
+
     CGContextSetInterpolationQuality(bitmapRef, kCGInterpolationNone);
     CGContextScaleCTM(bitmapRef, scale, scale);
     CGContextDrawImage(bitmapRef, extent, bitmapImage);
@@ -157,6 +166,7 @@ void ProviderReleaseData(void * info, const void * data, size_t size) {
     CGColorSpaceRelease(colorSpace);
     return [UIImage imageWithCGImage: scaledImage];
 }
+
 
 /*!
  * @function imageFillBlackColorToTransparent: red: green: blue:

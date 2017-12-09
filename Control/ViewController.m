@@ -12,7 +12,7 @@
 #import "ThirdVC.h"
 #import "TableViewController.h"
 #import <CoreMotion/CoreMotion.h>
-#import <ReactiveObjC/ReactiveObjC.h>
+//#import <ReactiveObjC/ReactiveObjC.h>
 
 #import "LoopQueue.h"
 //定位服务 ,地图

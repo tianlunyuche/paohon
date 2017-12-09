@@ -10,40 +10,51 @@
 #import "UIImage+ZXQRcode.h"
 
 @interface ZXQRcodeVC ()
-
+@property (weak, nonatomic) IBOutlet UITextField *text;
+@property (weak, nonatomic) IBOutlet UIButton *getQRBtn;
+@property(nonatomic,strong) UIImageView *imgV;
+@property(nonatomic,strong) UIImage *image;
 @end
 
 @implementation ZXQRcodeVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    self.text.text =@"http://www.habav.com/";
+
+    [self.view addSubview:self.imgV];
+    self.imgV.image =[self QRcodeCreat];
+    
+    [self.getQRBtn addTarget:self action:@selector(QRcodeCreat) forControlEvents:UIControlEventTouchUpInside];
+    
 }
 
 #pragma mark - 二维码生成
-- (void)QRcodeCreat{
+- (UIImage *)QRcodeCreat{
     
-    UIImage *img =[UIImage imageOfQRFromURL:@"http://www.habav.com/" codeSize:500 red:0 green:100.0 blue:100.0 insertImage:[UIImage imageNamed:@"1"] roundRadius:200.0f];
-    UIImageView *imgV =[[UIImageView alloc ] initWithFrame:((CGRect){(CGPointZero) ,img.size})];
-    imgV.center =self.view.center;
-    imgV.image =img;
-    [self.view addSubview:imgV];
+    UIImage *img  =[UIImage imageOfQRFromURL:self.text.text codeSize:500 red:130 green:100.0 blue:100.0 insertImage:self.image roundRadius:100.0f];
+    self.imgV.image =img;
+    return img;
 }
 
+-(UIImageView *)imgV{
+    if (!_imgV) {
+        _imgV =[[UIImageView alloc ] initWithFrame:CGRectMake(10, 250, 300, 300)];
+    }
+    return _imgV;
+}
+
+-(UIImage *)image{
+    if (!_image) {
+        _image =[UIImage imageNamed:@"tag_selected"];
+    }
+    return _image;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

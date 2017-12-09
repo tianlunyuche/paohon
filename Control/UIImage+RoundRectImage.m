@@ -40,28 +40,52 @@ void addRoundRectToPath(CGContextRef context, CGRect rect, float radius, CGImage
 //给传入的图片设置圆角后返回圆角图片
 + (UIImage *)imageOfRoundRectWithImage: (UIImage *)image size: (CGSize)size radius: (CGFloat)radius
 {
-    if (!image || (NSNull *)image == [NSNull null]) { return nil; }
+//    if (!image || (NSNull *)image == [NSNull null]) { return nil; }
+//
+//    const CGFloat width = size.width;
+//    const CGFloat height = size.height;
+//
+//    radius = MAX(5.f, radius);
+//    radius = MIN(10.f, radius);
+//
+//    UIImage * img = image;
+//    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+//    CGContextRef context = CGBitmapContextCreate(NULL, width, height, 8, 4 * width, colorSpace, kCGImageAlphaPremultipliedFirst);
+//    CGRect rect = CGRectMake(0, 0, width, height);
+//
+//    //绘制圆角
+//    CGContextBeginPath(context);
+//    addRoundRectToPath(context, rect, radius, img.CGImage);
+//    CGImageRef imageMasked = CGBitmapContextCreateImage(context);
+//    img = [UIImage imageWithCGImage: imageMasked];
+//
+//    CGContextRelease(context);
+//    CGColorSpaceRelease(colorSpace);
+//    CGImageRelease(imageMasked);
     
-    const CGFloat width = size.width;
-    const CGFloat height = size.height;
+    // 开启图形上下文 （这个就用到前面的UIView的分类可以直接点出来）
+    UIGraphicsBeginImageContext(size);
     
-    radius = MAX(5.f, radius);
-    radius = MIN(10.f, radius);
+    // 获得上下文
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
     
-    UIImage * img = image;
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef context = CGBitmapContextCreate(NULL, width, height, 8, 4 * width, colorSpace, kCGImageAlphaPremultipliedFirst);
-    CGRect rect = CGRectMake(0, 0, width, height);
+    // 矩形框
+    CGRect rect = CGRectMake(0, 0, size.width, size.height);
     
-    //绘制圆角
-    CGContextBeginPath(context);
-    addRoundRectToPath(context, rect, radius, img.CGImage);
-    CGImageRef imageMasked = CGBitmapContextCreateImage(context);
-    img = [UIImage imageWithCGImage: imageMasked];
+    // 添加一个圆
+    CGContextAddEllipseInRect(ctx, rect);
     
-    CGContextRelease(context);
-    CGColorSpaceRelease(colorSpace);
-    CGImageRelease(imageMasked);
+    // 裁剪(裁剪成刚才添加的图形形状)
+    CGContextClip(ctx);
+    
+    // 往圆上面画一张图片
+    [image drawInRect:rect];
+    
+    // 获得上下文中的图片
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    
+    // 关闭图形上下文
+    UIGraphicsEndImageContext();
     
     return img;
 }
