@@ -10,7 +10,7 @@ target 'Control' do
 #    pod 'YYKit'
     pod 'IQKeyboardManager'
     pod 'AFNetworking', '~> 3.0'
-    pod 'MBProgressHUD',’~> 1.0.0’
+#    pod 'MBProgressHUD',’~> 1.0.0’
     pod 'SDCycleScrollView','~> 1.64'
     pod 'SDWebImage', '~>3.8'
     pod 'TNRadioButtonGroup'
