@@ -21,6 +21,7 @@
 #import "ZXfmdbVC.h"
 #import "ZXplistVC.h"
 #import "ZXHookUtil.h"
+#import "ZXCollectionVC.h"
 
 //#import <React/RCTRootView.h>
 
@@ -342,7 +343,7 @@ commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
                [ZXVedioVC class]],
              @[[ZXThreadVC class],
                [ZXRunLoopVC class]],
-             @[[ZXQRcodeVC class] ,[ZXQRcodeVC class] ],
+             @[[ZXQRcodeVC class] ,[ZXCollectionVC class] ],
              @[[ZXDesignModeTableVC class],
                [ZXfmdbVC class],
                [ZXplistVC class]]];
