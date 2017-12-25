@@ -28,12 +28,14 @@ typedef void(^RunloopBlock) (void);
     [super viewDidLoad];
     self.title =@"RunLoop运行循环";
     [self setAnimation];
-    [self runloopCreat];
+//    [self runloopCreat];
 //    [self addRunloop];
 
     self.navigationItem.hidesBackButton =YES;
     self.navigationItem.leftBarButtonItem =[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_cancel_unfocused"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     self.navigationItem.leftItemsSupplementBackButton = YES;
+    
+
 }
 
 - (void)back{
@@ -45,16 +47,18 @@ typedef void(^RunloopBlock) (void);
 
 #pragma mark - setAnimation动画效果
 - (void)setAnimation{
+
     
-    _imgv =[[UIImageView alloc] init];
-    _imgv.frame =CGRectMake(30, 100, 80, 80);
-    _imgv.image =[UIImage imageNamed:@"1.png"];
-    [self.view addSubview:_imgv];
+    
+//    _imgv =[[UIImageView alloc] init];
+//    _imgv.frame =CGRectMake(30, 100, 80, 80);
+//    _imgv.image =[UIImage imageNamed:@"1.png"];
+//    [self.view addSubview:_imgv];
     //设置移动按钮
     UIButton* btnMove =[UIButton buttonWithType:UIButtonTypeRoundedRect];
     btnMove.frame =CGRectMake(120, 360, 80, 40);
     [btnMove setTitle:@"移动" forState:UIControlStateNormal];
-    
+
     //添加触发事件
     [btnMove addTarget:self action:@selector(preMove) forControlEvents:UIControlEventTouchUpInside];
     //添加视图
@@ -71,28 +75,81 @@ typedef void(^RunloopBlock) (void);
 
 - (void)preMove{
     
+    
+    // 淡出效果
+    //    CABasicAnimation *fadeOutAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    //    [fadeOutAnimation setToValue:[NSNumber numberWithFloat:0.3]];
+    //    fadeOutAnimation.fillMode = kCAFillModeForwards;
+    //    fadeOutAnimation.removedOnCompletion = NO;
+    
+    UIImageView *imageViewForAnimation = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"alert_big_icon"]];
+    imageViewForAnimation.frame =CGRectMake(20, 130, 60, 60);
+    imageViewForAnimation.alpha = 1.0f;
+    CGRect imageFrame = imageViewForAnimation.frame;
+    //frame.origin，动画开始的地方
+    CGPoint viewOrigin = imageViewForAnimation.frame.origin;
+    viewOrigin.y = viewOrigin.y + imageFrame.size.height / 2.0f;
+    viewOrigin.x = viewOrigin.x + imageFrame.size.width / 2.0f;
+    
+    imageViewForAnimation.frame = imageFrame;
+    imageViewForAnimation.layer.position = viewOrigin;
+    [self.view addSubview:imageViewForAnimation];
+    
+    //设置缩放
+//    CABasicAnimation *resizeAnimation = [CABasicAnimation animationWithKeyPath:@"bounds.size"];
+//    [resizeAnimation setToValue:[NSValue valueWithCGSize:CGSizeMake(40.0f, imageFrame.size.height * (40.0f / imageFrame.size.width))]];
+//    resizeAnimation.fillMode = kCAFillModeForwards;
+//    resizeAnimation.removedOnCompletion = NO;
+    
+    // 设置路径运动
+    CAKeyframeAnimation *pathAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
+    pathAnimation.calculationMode = kCAAnimationPaced;
+    pathAnimation.fillMode = kCAFillModeForwards;
+    pathAnimation.removedOnCompletion = NO;
+    //设置动画结束点
+    CGPoint endPoint = CGPointMake(480.0f - 30.0f, 40.0f);
+    //在最后一个选项卡结束动画
+    //CGPoint endPoint = CGPointMake( 320-40.0f, 480.0f);
+    CGMutablePathRef curvedPath = CGPathCreateMutable();
+    CGPathMoveToPoint(curvedPath, NULL, viewOrigin.x, viewOrigin.y);
+    CGPathAddCurveToPoint(curvedPath, NULL, endPoint.x, viewOrigin.y, endPoint.x, viewOrigin.y, endPoint.x, endPoint.y);
+    pathAnimation.path = curvedPath;
+    CGPathRelease(curvedPath);
+    
+    
+    CAAnimationGroup *group = [CAAnimationGroup animation];
+    group.fillMode = kCAFillModeForwards;
+    group.removedOnCompletion = NO;
+    [group setAnimations:[NSArray arrayWithObjects:pathAnimation, nil]];
+    group.duration = 1.0f;
+    //    group.delegate = self;
+    [group setValue:imageViewForAnimation forKey:@"imageViewBeingAnimated"];
+    
+    [imageViewForAnimation.layer addAnimation:group forKey:@"savingAnimation"];
+    
+    
     //开始动画函数 ，准备动画的开始工作
-    [UIView beginAnimations:nil context:nil];
-    
-    
-    [UIView setAnimationDuration:5];
-    //动画开始的 延时 长度，秒
-    [UIView setAnimationDelay:0];
-    //动画的 代理对象
-    [UIView setAnimationDelegate:self];
-    
-    //动画运动轨迹的方式 ,   UIViewAnimationCurveEaseInOut,  UIViewAnimationCurveEaseIn,//越来越快
-    //    UIViewAnimationCurveEaseOut, 越来越慢
-    //    UIViewAnimationCurveLinear
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
-    //设置动画结果调用的函数
-    [UIView setAnimationDidStopSelector:@selector(stopAmin)];
-    //----动画的实际 目标结果
-    //目标位置
-    _imgv.frame =CGRectMake(150, 300, 160, 120);
-    _imgv.alpha =0.3;
-    //提交运行动画
-    [UIView commitAnimations];
+//    [UIView beginAnimations:nil context:nil];
+//
+//
+//    [UIView setAnimationDuration:5];
+//    //动画开始的 延时 长度，秒
+//    [UIView setAnimationDelay:0];
+//    //动画的 代理对象
+//    [UIView setAnimationDelegate:self];
+//
+//    //动画运动轨迹的方式 ,   UIViewAnimationCurveEaseInOut,  UIViewAnimationCurveEaseIn,//越来越快
+//    //    UIViewAnimationCurveEaseOut, 越来越慢
+//    //    UIViewAnimationCurveLinear
+//    [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+//    //设置动画结果调用的函数
+//    [UIView setAnimationDidStopSelector:@selector(stopAmin)];
+//    //----动画的实际 目标结果
+//    //目标位置
+//    _imgv.frame =CGRectMake(150, 300, 160, 120);
+//    _imgv.alpha =0.3;
+//    //提交运行动画
+//    [UIView commitAnimations];
 }
 
 - (void)stopAmin{
