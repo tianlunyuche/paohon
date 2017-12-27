@@ -35,7 +35,24 @@ typedef void(^RunloopBlock) (void);
     self.navigationItem.leftBarButtonItem =[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_cancel_unfocused"] style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     self.navigationItem.leftItemsSupplementBackButton = YES;
     
-
+//    设置UIImage的渲染模式：UIImage.renderingMode
+//
+//    着色（Tint Color）是iOS7界面中的一个.设置UIImage的渲染模式：UIImage.renderingMode重大改变，你可以设置一个UIImage在渲染时是否使用当前视图的Tint Color。UIImage新增了一个只读属性：renderingMode，对应的还有一个新增方法：imageWithRenderingMode:，它使用UIImageRenderingMode枚举值来设置图片的renderingMode属性。该枚举中包含下列值：
+//
+//    UIImageRenderingModeAutomatic  // 根据图片的使用环境和所处的绘图上下文自动调整渲染模式。
+//    UIImageRenderingModeAlwaysOriginal   // 始终绘制图片原始状态，不使用Tint Color。
+//    UIImageRenderingModeAlwaysTemplate   // 始终根据Tint Color绘制图片，忽略图片的颜色信息。
+//
+//    renderingMode属性的默认值是UIImageRenderingModeAutomatic，即UIImage是否使用Tint Color取决于它显示的位置。其他情况可以看下面的图例
+//
+//
+//
+//
+//    以下的代码说明了使用一个既定的rendering模式创建图片是多么简单：
+//
+//    UIImage *img = [UIImage imageNamed:@ "myimage" ];
+//    img = [img imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+//https://www.cnblogs.com/philipding/archive/2016/03/26/5322581.html
 }
 
 - (void)back{

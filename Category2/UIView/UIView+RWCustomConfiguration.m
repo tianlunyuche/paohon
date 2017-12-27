@@ -180,5 +180,160 @@
     [self.layer insertSublayer:gradientLayer atIndex:0];
     
 }
+//-----------------
+/**
+ CAShapeLayer，UIImageView 通过CABasicAnimation，CAKeyframeAnimation实现动画，CAAnimationGroup实现组合动画，UIBezierPath 绘制移动路径
+ */
+- (void)shape{
+    
+    //    UIImageView *imageView =[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"进度发光点"]];
+    
+    CAShapeLayer  *_trackLayer = [CAShapeLayer layer];//创建一个track shape layer
+    _trackLayer.frame = self.bounds;
+    //    [imageView.layer addSublayer:_trackLayer];
+    [self.layer addSublayer:_trackLayer];
+    _trackLayer.fillColor = [UIColor clearColor].CGColor;
+    _trackLayer.strokeColor =[UIColor whiteColor].CGColor;//指定path的渲染颜色
+    _trackLayer.opacity = 0;
+    _trackLayer.lineCap = kCALineCapRound;//指定线的边缘是圆的
+    _trackLayer.lineWidth = PROGRESS_LINE_WIDTH;//线的宽度
+    
+    //    imageView.layer.mask =_trackLayer;
+    
+    UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:CGPointMake(self.bounds.size.width /2, self.bounds.size.height /2) radius:(PROGREESS_WIDTH-PROGRESS_LINE_WIDTH)/2 startAngle:degreesToRadians(-200) endAngle:degreesToRadians(20) clockwise:YES];
+    //    imageView.frame =CGRectMake(path.currentPoint.x, path.currentPoint.y, 40, 40);
+    //    imageView.layer.position = imageView.frame.origin;
+    //    [self addSubview:imageView];
+    _trackLayer.path =[path CGPath]; //把path传递給layer，然后layer会处理相应的渲染，整个逻辑和CoreGraph是一致的。
+    
+    //增加动画
+    //    CAKeyframeAnimation *pathAnimation=[CAKeyframeAnimation animationWithKeyPath:@"stokeEnd"];
+    CABasicAnimation *pathAnimation=[CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+    pathAnimation.duration = 3;
+    //    pathAnimation.keyPath =path.CGPath;
+    
+    pathAnimation.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+    pathAnimation.fromValue=[NSNumber numberWithFloat:0.0f];
+    pathAnimation.toValue=[NSNumber numberWithFloat:1.0f];
+    pathAnimation.autoreverses=NO;
+    pathAnimation.repeatCount = NO;
+    //    imageView.frame =CGRectMake(path.currentPoint.x, path.currentPoint.y,imageView.bounds.size.width, imageView.bounds.size.height);
+    //    [_trackLayer addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
+    
+    CABasicAnimation *showViewAnn = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    showViewAnn.fromValue = [NSNumber numberWithFloat:0.0];
+    showViewAnn.toValue = [NSNumber numberWithFloat:1.0];
+    //    showViewAnn.duration = kAnimationDuration;
+    showViewAnn.fillMode = kCAFillModeForwards;
+    showViewAnn.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    showViewAnn.removedOnCompletion = NO;
+    //    [_trackLayer addAnimation:showViewAnn forKey:@"myShow"];
+    
+    CAAnimationGroup *group = [CAAnimationGroup animation];
+    group.fillMode = kCAFillModeForwards;
+    group.removedOnCompletion = NO;
+    [group setAnimations:[NSArray arrayWithObjects:pathAnimation,showViewAnn, nil]];
+    group.duration = 3.0f;
+    //    group.delegate = self;
+    //    [group setValue:_trackLayer forKey:@"imageViewBeingAnimated"];
+    
+    [_trackLayer addAnimation:group forKey:@"savingAnimation"];
+    //开始动画函数 ，准备动画的开始工作
+    //    [UIView beginAnimations:nil context:nil];
+    //
+    //    [UIView setAnimationDuration:5];
+    //    //动画开始的 延时 长度，秒
+    //    [UIView setAnimationDelay:0];
+    //    //动画的 代理对象
+    //    [UIView setAnimationDelegate:self];
+    //
+    //    [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+    //    //设置动画结果调用的函数
+    //    [UIView setAnimationDidStopSelector:@selector(stopAmin)];
+    //    //----动画的实际 目标结果
+    //    //目标位置
+    //    imageView.frame =
+    //    imageView.alpha =0.7;
+    //    //提交运行动画
+    //    [UIView commitAnimations];
+    
+    
+    // 淡出效果
+    //    CABasicAnimation *fadeOutAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    //    [fadeOutAnimation setToValue:[NSNumber numberWithFloat:0.3]];
+    //    fadeOutAnimation.fillMode = kCAFillModeForwards;
+    //    fadeOutAnimation.removedOnCompletion = NO;
+    
+    UIImageView *imageViewForAnimation = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"进度发光点"]];
+    //    imageViewForAnimation.frame =CGRectMake(20, 130, 60, 60);
+    imageViewForAnimation.alpha = 1.0f;
+    //    CGRect imageFrame = imageViewForAnimation.frame;
+    //frame.origin，动画开始的地方
+    //    CGPoint viewOrigin = imageViewForAnimation.frame.origin;
+    //    viewOrigin.y = viewOrigin.y + imageFrame.size.height / 2.0f;
+    //    viewOrigin.x = viewOrigin.x + imageFrame.size.width / 2.0f;
+    
+    //    imageViewForAnimation.frame = imageFrame;
+    //    imageViewForAnimation.layer.position = viewOrigin;
+    [self addSubview:imageViewForAnimation];
+    
+    CAKeyframeAnimation *pathAnimation2 = [CAKeyframeAnimation animationWithKeyPath:@"position"];
+    pathAnimation2.calculationMode = kCAAnimationPaced;
+    pathAnimation2.fillMode = kCAFillModeForwards;
+    pathAnimation2.removedOnCompletion = NO;
+    //设置动画结束点
+    //    CGPoint endPoint = CGPointMake(480.0f - 30.0f, 40.0f);
+    //在最后一个选项卡结束动画
+    //CGPoint endPoint = CGPointMake( 320-40.0f, 480.0f);
+    //    CGMutablePathRef curvedPath = CGPathCreateMutable();
+    //    CGPathMoveToPoint(curvedPath, NULL, viewOrigin.x, viewOrigin.y);
+    //    CGPathAddCurveToPoint(curvedPath, NULL, endPoint.x, viewOrigin.y, endPoint.x, viewOrigin.y, endPoint.x, endPoint.y);
+    pathAnimation2.path = path.CGPath;
+    //    CGPathRelease(curvedPath);
+    
+    //---------------------
+    CAAnimationGroup *group = [CAAnimationGroup animation];
+    group.fillMode = kCAFillModeForwards;
+    group.removedOnCompletion = NO;
+    [group setAnimations:[NSArray arrayWithObjects:pathAnimation2, nil]];
+    group.duration = 3.0f;
+    //    group.delegate = self;
+    [group setValue:imageViewForAnimation forKey:@"imageViewBeingAnimated"];
+
+    [imageViewForAnimation.layer addAnimation:group forKey:@"savingAnimation"];
+    
+    //设置缩放
+    //    CABasicAnimation *resizeAnimation = [CABasicAnimation animationWithKeyPath:@"bounds.size"];
+    //    [resizeAnimation setToValue:[NSValue valueWithCGSize:CGSizeMake(40.0f, imageFrame.size.height * (40.0f / imageFrame.size.width))]];
+    //    resizeAnimation.fillMode = kCAFillModeForwards;
+    //    resizeAnimation.removedOnCompletion = NO;
+    
+    //     设置路径运动
+    //    CAKeyframeAnimation *pathAnimation2 = [CAKeyframeAnimation animationWithKeyPath:@"position"];
+    //    pathAnimation2.calculationMode = kCAAnimationPaced;
+    //    pathAnimation2.fillMode = kCAFillModeForwards;
+    //    pathAnimation2.removedOnCompletion = NO;
+    //    //设置动画结束点
+    //    CGPoint endPoint = CGPointMake(480.0f - 30.0f, 40.0f);
+    //    //在最后一个选项卡结束动画
+    //    //CGPoint endPoint = CGPointMake( 320-40.0f, 480.0f);
+    //    CGMutablePathRef curvedPath = CGPathCreateMutable();
+    //    CGPathMoveToPoint(curvedPath, NULL, viewOrigin.x, viewOrigin.y);
+    //    CGPathAddCurveToPoint(curvedPath, NULL, endPoint.x, viewOrigin.y, endPoint.x, viewOrigin.y, endPoint.x, endPoint.y);
+    //    pathAnimation2.path = path.CGPath;
+    //    CGPathRelease(curvedPath);
+    //
+    //
+    //    CAAnimationGroup *group = [CAAnimationGroup animation];
+    //    group.fillMode = kCAFillModeForwards;
+    //    group.removedOnCompletion = NO;
+    //    [group setAnimations:[NSArray arrayWithObjects:pathAnimation2, nil]];
+    //    group.duration = 1.0f;
+    //    //    group.delegate = self;
+    //    [group setValue:imageViewForAnimation forKey:@"imageViewBeingAnimated"];
+    //
+    //    [imageViewForAnimation.layer addAnimation:group forKey:@"savingAnimation"];
+    
+}
 
 @end
